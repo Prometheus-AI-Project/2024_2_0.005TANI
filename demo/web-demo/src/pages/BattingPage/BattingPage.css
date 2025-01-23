@@ -1,0 +1,265 @@
+/* 전체 페이지 컨테이너 */
+.batting-page-container {
+    /* 화면 가득 채우기 */
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  
+    /* 두 번째 사진(배경) 사용. 경로는 CSS 기준 상대경로 or public 절대경로 */
+    background: url('../../assets/img/background/batter.png') center center / cover no-repeat;
+    /* 만약 public 폴더라면: background: url('/img/background/stadium2.jpg') ... */
+  
+    /* 레이아웃 배치 */
+    display: flex;
+    flex-direction: column; /* 위->아래로 배치 */
+    justify-content: space-between; /* 상단 스코어보드, 중간 필드, 하단 배치 등 */
+  }
+  
+  /* 상단 스코어보드 예시 */
+  .batting-scoreboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+  }
+  
+  .team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .inning-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* 메인 필드 영역 (가운데) */
+  .batting-main-field {
+    flex: 1; /* 남은 공간을 차지 */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* 좌우 패딩 필요 시 */
+    padding: 1rem 2rem; 
+    /*position: relative; */
+  }
+  
+  /* 선수 카드 공통 스타일 */
+  .player-card {
+    width: 110px;
+    height: 190px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* 카드 헤더 */
+  .player-card-header {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* 카드 내 스탯 목록 */
+  .player-stats ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .player-stats li {
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+  }
+  
+  /* 왼쪽 카드, 오른쪽 카드 배치 */
+  .player-card-left {
+    /* 왼쪽 배치 (부모가 space-between 하고 있으니 자동으로 왼쪽에) */
+  }
+  .player-card-right {
+    /* 오른쪽 배치 */
+  }
+  
+  /* 중앙 투수 영역 */
+  .pitcher-center {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1rem 2rem;
+    border-radius: 100px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* 하단 타격 정보 영역 */
+  .batting-info-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    height: 50px;
+  }
+  
+  .info-item {
+    margin: 0 1rem;
+  }
+  
+
+    ====== 5x5 존 그리드 ======
+    .zone-container {
+        /* 절대 위치로, 부모 .pitching-main 기준 */
+        position: absolute;
+        
+        /* 원하는 위치에 맞춰서 top/left 조정 */
+        top: 46%;      /* 화면 크기에 따라 적절히 조정하세요 (예: 25%, 35%, px 단위 등) */
+        left: 49%;     /* 수평 가운데 */
+        transform: translateX(-50%);  /* 가운데 정렬을 위해 X축 -50% 이동 */
+      
+   
+    
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 0px;
+        
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 8px;
+        border-radius: 8px;
+      }
+      
+      /* 각각의 네모 칸 */
+      .zone-box {
+        width: 25px;
+        height: 35px;
+        background-color: rgba(255,255,255,0.3);
+        border: 1px solid #fff;
+        border-radius: 2px;
+        transition: background-color 0.2s;
+      }
+      .zone-box:hover {
+        background-color: rgba(255,255,255,0.6);
+      }
+      /* 통합된 5x5 그리드 */
+.zone-container.integrated-grid {
+  position: absolute;
+  top: 46%; /* 화면 중앙에 위치 */
+  left: 50%;
+  transform: translate(-50%);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 0px;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* 박스 스타일 */
+.batting-zone-box {
+  width: 25px;
+  height: 35px;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid #fff;
+  border-radius: 2px;
+  font-size: 9px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.batting-zone-box:hover {
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+/* 박스 색상 */
+.batting-zone-box.red {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.batting-zone-box.orange {
+  background-color: rgba(255, 165, 0, 0.5);
+}
+
+.batting-zone-box.yellow {
+  background-color: rgba(255, 255, 0, 0.5);
+}
+/* 팝업 메시지 스타일 */
+.popup {
+  position: fixed; /* 화면에 고정 */
+  top: 20%; /* 화면 상단에서의 위치 */
+  left: 50%; /* 화면 중앙 */
+  transform: translate(-50%, -50%); /* 중앙 정렬 */
+  background-color: rgba(0, 0, 0, 0.8); /* 반투명 배경 */
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 1000; /* 다른 요소 위에 표시 */
+  animation: fadeInOut 2s; /* 애니메이션 추가 */
+}
+
+/* 팝업 애니메이션 */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+}
+
+/* 좌측 하단 선택 버튼 영역 */
+.decision-buttons {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.decision-button {
+  background-color: #2865a5;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.decision-button:hover {
+  background-color: #042a53;
+}
+
+/* 선택된 결정 정보 스타일 */
+.decision-info {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #00ff00; /* 선택된 결정 텍스트 색상 (녹색) */
+  text-align: center;
+}
+

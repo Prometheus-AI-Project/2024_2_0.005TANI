@@ -1,0 +1,202 @@
+/* 전체 페이지 배경 */
+.pitching-page-container {
+    width: 100vw;
+    height: 100vh;
+    background: url('../../assets/img/background/pitcher.png') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 상단 스코어보드 */
+  .pitching-scoreboard {
+    width: 100%;
+    height: 50px;
+    background-color: rgba(0,0,0,0.6);
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .score-team, .score-inning {
+    font-weight: bold;
+  }
+  
+  /* 메인 콘텐트 영역 */
+  .pitching-main {
+    flex: 1;
+    position: relative;  /* zone-container를 절대배치하려면 부모는 relative */
+    display: flex;       /* (투수/타자 텍스트를 단순 배치하기 위해) */
+    justify-content: center;
+    align-items: flex-end; /* 아래쪽 근처에 텍스트가 오도록 조정 (선택사항) */
+  }
+  
+  /* 투수/타자 정보 텍스트 */
+  .pitcher-info, .batter-info {
+    color: #fff;
+    font-weight: bold;
+    margin: 0 2rem;
+  }
+  
+  /* ====== 5x5 존 그리드 ====== */
+  .pitcher-zone-container {
+    /* 절대 위치로, 부모 .pitching-main 기준 */
+    position: absolute;
+    
+    /* 원하는 위치에 맞춰서 top/left 조정 */
+    top: 11%;      /* 화면 크기에 따라 적절히 조정하세요 (예: 25%, 35%, px 단위 등) */
+    left: 48%;     /* 수평 가운데 */
+    transform: translateX(-50%);  /* 가운데 정렬을 위해 X축 -50% 이동 */
+  
+    width: auto;
+    height: auto;
+
+    display: grid;
+    grid-template-columns: repeat(5, 25px);
+    grid-template-rows: repeat(5, 35px);
+    gap: 0px;
+    
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0px;
+    border-radius: 8px;
+  }
+    /* 각각의 네모 칸 */
+    .zone-box {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255,255,255,0.3);
+      border: 1px solid #fff;
+      border-radius: 2px;
+      transition: background-color 0.2s;
+    }
+    .zone-box:hover {
+      background-color: rgba(255,255,255,0.6);
+    }
+
+  .batting-average-container {
+    display: grid;
+    grid-template-columns: repeat(5, 40px);
+    grid-template-rows: repeat(5, 40px);
+    gap: 2px; /* 박스 간 간격 */
+    position: absolute;
+    top: 300px;
+    left: 50px;
+    width: 200px;
+    height: 200px;
+  }
+  
+
+  .batting-zone-box {
+    width: 100%; /* 박스 너비 */
+    height: 100%; /* 박스 높이 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+ 
+    font-size: 14px;
+    background-color: #f9f9f9;
+  }
+  .batting-zone-box.red {
+    background-color: rgba(255, 0, 0, 0.5); /* 빨간색 */
+  }
+  
+  .batting-zone-box.orange {
+    background-color: rgba(255, 165, 0, 0.5); /* 주황색 */
+  }
+  
+  .batting-zone-box.yellow {
+    background-color: rgba(255, 255, 0, 0.5); /* 노란색 */
+  }
+
+  /* 구종 선택 컴포넌트 */
+.pitch-type-selector {
+  position: absolute;
+  top: 20%; /* 화면에서의 위치 */
+  right: 5%; /* 우측에 고정 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pitch-type-selector h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #fff
+}
+
+.pitch-type-button {
+  margin: 5px 0;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
+
+.highlight {
+  font-weight: bold;
+  color: #007bff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.throw-pitch-container {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* 던지기 버튼 스타일 */
+.throw-pitch-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.throw-pitch-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.throw-pitch-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.throw-pitch-button:active {
+  background-color: #1e7e34;
+}
+
+.pitch-type-button:hover {
+  background-color: rgba(200, 200, 200, 0.8);
+}
+
+
+.zone-box.selected {
+  background-color: rgba(250, 136, 132, 0.3);
+  border: 2px solid #ff0000;
+}
+
+.pitch-type-button.selected {
+  background-color: rgb(86, 114, 240);
+}
