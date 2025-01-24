@@ -40,104 +40,109 @@ function PitchingPage() {
 
   const [pitchResult, setPitchResult] = useState(null);
 
-  useEffect(() => {
-    // FastAPI에서 데이터 가져오기
-    const fetchPitchResult = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/pitch/result");
-        setPitchResult(response.data); // 데이터 저장
-
-
-
-      } catch (error) {
-        console.error("Error fetching pitch result:", error);
-      }
-    };
-
-    fetchPitchResult();
-  }, []);
-
-    // pitchResult에 따른 상태 업데이트
+    /*
     useEffect(() => {
-      if (!pitchResult || isInningOver) return;
-  
-      const handlePitchResult = () => {
-        switch (pitchResult) {
-          case 'homerun':
-            if (runners > 0) {
-              setAwayScore(prev => prev + runners + 1); // 주자 수만큼 +1
-              setRunners(0); // 주자 초기화
-            } else {
-              setAwayScore(prev => prev + 1);
-            }
-            resetCount();
-            setHitterOrder(prevOut => prevOut + 1);
-            break;
-  
-          case 'hit':
-            setRunners(prev => {
-              const newRunner = prev + 1;
-              if (newRunner >= 3) {
-                setAwayScore(score => score + newRunner);
-                return 0;
-              }
-              return newRunner;
-            });
-            setHitterOrder(prevOut => prevOut + 1);
-            resetCount();
-            break;
-  
-          case 'foul':
-            if (strikes < 2) { // 스트라이크는 0,1,2 (3이 되면 아웃)
-              setStrikes(prev => prev + 1);
-            }
-            // Foul 시 스트라이크 2 이상에서는 스트라이크 수 증가하지 않음
-            break;
-  
-          case 'strike':
-            setStrikes(prev => {
-              const newStrike = prev + 1;
-              if (newStrike >= 3) {
-                setOuts(prevOut => prevOut + 1);
-                setHitterOrder(prevOut => prevOut + 1);
-                resetCount();
-              }
-              return newStrike;
-            });
-            break;
-  
-          case 'ball':
-            setBalls(prev => {
-              const newBall = prev + 1;
-              if (newBall >= 4) {
-                // 진루 로직 (예: 주자 추가 또는 점수)
-                setRunners(prevRunner => Math.min(prevRunner + 1, 3)); // 주자가 3명 이상일 경우 처리
-                setHitterOrder(prevOut => prevOut + 1);
-                resetCount();
-              }
-              return newBall;
-            });
-            break;
-  
-          default:
-            break;
+      // FastAPI에서 데이터 가져오기
+      const fetchPitchResult = async () => {
+        try {
+          const response = await axios.get("http://localhost:8000/api/pitch/result");
+          setPitchResult(response.data.result); // 데이터 저장
+          console.log(pitchResult)
+        } catch (error) {
+          console.error("Error fetching pitch result:", error);
         }
       };
-  
-      handlePitchResult();
-  
-      // Check for inning over
-      if (outs >= 3) {
-        setIsInningOver(true);
-        // 추가 로직: 공수 교대 처리
-        console.log("Inning over. Switching sides.");
-        // 예: 상태 초기화 또는 다른 팀으로 전환
-      }
-      if (hitterOrder >= 10) {
-        setHitterOrder(0);//타순 한 바퀴 다 돌면 1번으로
-      }
-  
-    }, [pitchResult, runners, strikes, balls, outs, isInningOver]);
+
+      fetchPitchResult();
+    }, []);*/
+
+    
+    
+    // pitchResult에 따른 상태 업데이트
+useEffect(() => {
+  // pitchResult가 null이면 로직 실행 안 함
+  if (pitchResult === null) return;
+  alert(pitchResult)
+  const handlePitchResult = () => {
+    switch (pitchResult) {
+      case 'homerun':
+        if (runners > 0) {
+          setAwayScore((prev) => prev + runners + 1);
+          setRunners(0);
+        } else {
+          setAwayScore((prev) => prev + 1);
+        }
+        resetCount();
+        setHitterOrder((prev) => prev + 1);
+        break;
+
+      case 'hit':
+        setRunners((prev) => {
+          const newRunner = prev + 1;
+          if (newRunner > 3) {
+            setAwayScore((score) => score + newRunner);
+            return 0;
+          }
+          return newRunner;
+        });
+        setHitterOrder((prev) => prev + 1);
+        resetCount();
+        break;
+
+      case 'foul':
+        if (strikes < 2) {
+          setStrikes((prev) => prev + 1);
+        }
+        break;
+
+      case 'strike':
+        setStrikes((prev) => {
+          const newStrike = prev + 1;
+          if (newStrike >= 3) {
+            setOuts((prevOut) => prevOut + 1);
+            setHitterOrder((prevOut) => prevOut + 1);
+            resetCount();
+          }
+          return newStrike;
+        });
+        break;
+
+      case 'ball':
+        setBalls((prev) => {
+          const newBall = prev + 1;
+          if (newBall >= 4) {
+            setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
+            setHitterOrder((prevOut) => prevOut + 1);
+            resetCount();
+          }
+          return newBall;
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    // 아웃이 3개면 이닝 종료
+    if (outs >= 3) {
+      setIsInningOver(true);
+      console.log("Inning over. Switching sides.");
+      // 추가 로직: 상태 초기화 또는 상대팀으로 전환 등
+    }
+    // 타순이 10을 넘으면 다시 0으로
+    if (hitterOrder >= 10) {
+      setHitterOrder(0);
+    }
+  };
+
+  // 실제 로직 실행
+  handlePitchResult();
+
+  // 처리 완료 후 pitchResult를 다시 null로 만들어 재실행 방지
+  setPitchResult(null);
+
+// 의존성 배열에서 pitchResult만 포함
+}, [pitchResult]);
   
 
   /*if (!pitchResult) {
@@ -164,6 +169,7 @@ function PitchingPage() {
   };
 
   const handleThrowPitch = async () => {
+    setPitchResult(null);
     if (!selectedPitch || selectedZone === null) {
       alert("구종과 투구 영역을 선택하세요.");
       return;
@@ -183,9 +189,11 @@ function PitchingPage() {
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/pitch', pitchData);
-      console.log("Pitch data sent successfully:", response.data);
-      alert("투구 정보가 전송되었습니다.");
+      const getResult  = await axios.post('http://localhost:8000/api/pitch', pitchData);
+      
+      setPitchResult(getResult.data);
+      
+      
     } catch (error) {
       console.error("Error sending pitch data:", error);
       alert("투구 정보 전송 중 오류가 발생했습니다.");
@@ -193,35 +201,51 @@ function PitchingPage() {
   };
 
   return (
-    <div className="pitching-page-container">
-      {/* 점수판 영역 */}
+    <div className="pitching-page">
+      {/* 스코어보드 */}
       <div className="pitching-scoreboard">
-        <div className="score-team">{homeTeam} {homeScore}</div>
-        <div className="score-inning">
-          {inning} {homeScore}-{awayScore} {outs}아웃 {strikes}스트라이크 {balls}볼
+        {/* 왼쪽 팀 점수 */}
+        <div className="score-team left">
+          {homeTeam} {homeScore}
         </div>
-        <div className="score-team">{awayTeam} {awayScore}</div>
+  
+        {/* 다이아몬드 (가운데) */}
+        <div className="baseball-diamond-container">
+          <div className="baseball-diamond">
+            <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
+            <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
+            <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
+            <div className="base home" />
+          </div>
+        </div>
+  
+        {/* 오른쪽 팀 점수 */}
+        <div className="score-team right">
+          {awayTeam} {awayScore}
+        </div>
       </div>
-
-      {/* 메인 콘텐트 영역 */}
+  
+      {/* 이닝, 볼카운트, 아웃 정보 */}
+      <div className="score-inning">
+        {inning} {homeScore}-{awayScore} {outs}아웃 {strikes}스트라이크 {balls}볼
+      </div>
+  
+      {/* 메인 콘텐츠 */}
       <div className="pitching-main">
         <div className="pitcher-info">
           <p>투수 정보 띄우기?</p>
         </div>
-
-        {/* 타율 표시 영역 */}
+  
+        {/* 타율 표시 */}
         <div className="batting-average-container">
           {battingAverage.map((average, index) => (
-            <div
-              key={index}
-              className={getBoxClass(average)}
-            >
-              {average.toFixed(3)} {/* 소수점 3자리로 표시 */}
+            <div key={index} className={getBoxClass(average)}>
+              {average.toFixed(3)}
             </div>
           ))}
         </div>
-
-        {/* 투수가 던질 영역 선택 */}
+  
+        {/* 투수가 던질 존(Zone) 선택 */}
         <div className="pitcher-zone-container">
           {zones.map((zoneIndex) => (
             <div
@@ -233,12 +257,12 @@ function PitchingPage() {
             </div>
           ))}
         </div>
-
+  
         <div className="batter-info">
           <p>타자 정보 띄우기</p>
         </div>
-
-        {/* 구종 선택 컴포넌트 */}
+  
+        {/* 구종 선택 버튼 */}
         <div className="pitch-type-selector">
           <h3>구종 선택</h3>
           {pitchTypes.map((pitch, index) => (
@@ -251,22 +275,21 @@ function PitchingPage() {
             </button>
           ))}
         </div>
+  
+        {/* 던지기 버튼 */}
+        <div className="throw-pitch-container">
+          <button
+            className="throw-pitch-button"
+            onClick={handleThrowPitch}
+            disabled={!selectedPitch || selectedZone === null}
+          >
+            던지기
+          </button>
+        </div>
       </div>
-
-      {/* 던지기 버튼 */}
-      <div className="throw-pitch-container">
-        <button
-          className="throw-pitch-button"
-          onClick={handleThrowPitch}
-          disabled={!selectedPitch || selectedZone === null} // 조건 추가
-        >
-          던지기
-        </button>
-      </div>
-
-      
     </div>
   );
+  
 }
 
 export default PitchingPage;

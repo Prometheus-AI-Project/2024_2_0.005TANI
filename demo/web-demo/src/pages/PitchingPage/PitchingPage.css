@@ -1,3 +1,5 @@
+
+
 /* 전체 페이지 배경 */
 .pitching-page-container {
     width: 100vw;
@@ -154,7 +156,7 @@
 
 .throw-pitch-container {
   position: absolute;
-  bottom: 60px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -200,3 +202,4 @@
 .pitch-type-button.selected {
   background-color: rgb(86, 114, 240);
 }
+
