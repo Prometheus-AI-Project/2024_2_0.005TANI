@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './PitchingPage.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate  } from 'react-router-dom';
+
 import axios from 'axios';
 
 function PitchingPage() {
   const location = useLocation();
-  const { homeTeam, pitcherHeight, pitchForm, awayTeam } = location.state || {};
-
+  const { homeTeam, pitcherHeight, pitchHand, pitchForm, awayTeam } = location.state || {};
+  
   // 점수 및 게임 상태 변수 관리
-  const [homeScore, setHomeScore] = useState(0);
-  const [awayScore, setAwayScore] = useState(0);
+  const [homeScore, setHomeScore] = useState(7);
+  const [awayScore, setAwayScore] = useState(7);
   const [inning, setInning] = useState("9회 초");
   const [outs, setOuts] = useState(0);
   const [strikes, setStrikes] = useState(0);
   const [balls, setBalls] = useState(0);
   const [runners, setRunners] = useState(0);
   const [hitterOrder, setHitterOrder] = useState(0);
-  const [isInningOver, setIsInningOver] = useState(false); 
+  const navigate = useNavigate(); // React Router의 navigate 함수 사용
 
   const resetCount = () => {
     setStrikes(0);
@@ -40,25 +41,6 @@ function PitchingPage() {
 
   const [pitchResult, setPitchResult] = useState(null);
 
-    /*
-    useEffect(() => {
-      // FastAPI에서 데이터 가져오기
-      const fetchPitchResult = async () => {
-        try {
-          const response = await axios.get("http://localhost:8000/api/pitch/result");
-          setPitchResult(response.data.result); // 데이터 저장
-          console.log(pitchResult)
-        } catch (error) {
-          console.error("Error fetching pitch result:", error);
-        }
-      };
-
-      fetchPitchResult();
-    }, []);*/
-
-    
-    
-    // pitchResult에 따른 상태 업데이트
 useEffect(() => {
   // pitchResult가 null이면 로직 실행 안 함
   if (pitchResult === null) return;
@@ -100,7 +82,7 @@ useEffect(() => {
           const newStrike = prev + 1;
           if (newStrike >= 3) {
             setOuts((prevOut) => prevOut + 1);
-            setHitterOrder((prevOut) => prevOut + 1);
+            setHitterOrder((prev) => prev + 1);
             resetCount();
           }
           return newStrike;
@@ -112,10 +94,19 @@ useEffect(() => {
           const newBall = prev + 1;
           if (newBall >= 4) {
             setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
-            setHitterOrder((prevOut) => prevOut + 1);
+            setHitterOrder((prev) => prev + 1);
             resetCount();
           }
           return newBall;
+        });
+        break;
+
+      case 'out':
+        setOuts((prev) => {
+          const newOut = prev + 1;
+          setHitterOrder((prev) => prev + 1);
+          resetCount();
+          return newOut;
         });
         break;
 
@@ -123,16 +114,7 @@ useEffect(() => {
         break;
     }
 
-    // 아웃이 3개면 이닝 종료
-    if (outs >= 3) {
-      setIsInningOver(true);
-      console.log("Inning over. Switching sides.");
-      // 추가 로직: 상태 초기화 또는 상대팀으로 전환 등
-    }
-    // 타순이 10을 넘으면 다시 0으로
-    if (hitterOrder >= 10) {
-      setHitterOrder(0);
-    }
+    
   };
 
   // 실제 로직 실행
@@ -143,8 +125,28 @@ useEffect(() => {
 
 // 의존성 배열에서 pitchResult만 포함
 }, [pitchResult]);
-  
 
+  useEffect(() => {
+  if (outs >= 3) {
+    console.log("Inning over. Switching sides.");
+    alert("수비가 끝났습니다. 9회말로 이동합니다");
+    navigate('/bat', {
+      state: {
+        homeTeam,
+        awayTeam,
+        homeScore,
+        awayScore
+      }
+    });
+    // 추가 로직: 상태 초기화 또는 상대팀으로 전환 등
+  }
+}, [outs]);
+
+  useEffect(() => {
+    if (hitterOrder >= 10) {
+      setHitterOrder(0);
+    }
+  }, [hitterOrder]);
   /*if (!pitchResult) {
     return <div>Loading...</div>;
   }*/
@@ -176,7 +178,8 @@ useEffect(() => {
     }
 
     const pitchData = {
-      pitchForm: pitchForm || "좌투", // 기본값 설정
+      pitchHand : pitchHand || '좌투',
+      pitchForm: pitchForm || "오버핸드", // 기본값 설정
       pitchType: selectedPitch || "직구",
       pitcherHeight: pitcherHeight || 185,
       zone: selectedZone !== null ? selectedZone : 0, // 기본값 0
@@ -199,36 +202,38 @@ useEffect(() => {
       alert("투구 정보 전송 중 오류가 발생했습니다.");
     }
   };
-
+  
   return (
     <div className="pitching-page">
       {/* 스코어보드 */}
       <div className="pitching-scoreboard">
         {/* 왼쪽 팀 점수 */}
         <div className="score-team left">
-          {homeTeam} {homeScore}
+          {homeTeam}   {homeScore}
         </div>
-  
+
+        {/* 이닝, 볼카운트, 아웃 정보 */}
+        <div className="score-inning">
+          {inning}  {outs} 아웃 {strikes} 스트라이크 {balls} 볼
+        </div>
+
         {/* 다이아몬드 (가운데) */}
         <div className="baseball-diamond-container">
           <div className="baseball-diamond">
             <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
             <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
             <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
-            <div className="base home" />
+                        
           </div>
         </div>
   
         {/* 오른쪽 팀 점수 */}
         <div className="score-team right">
-          {awayTeam} {awayScore}
+          {awayScore}   {awayTeam} 
         </div>
       </div>
   
-      {/* 이닝, 볼카운트, 아웃 정보 */}
-      <div className="score-inning">
-        {inning} {homeScore}-{awayScore} {outs}아웃 {strikes}스트라이크 {balls}볼
-      </div>
+      
   
       {/* 메인 콘텐츠 */}
       <div className="pitching-main">

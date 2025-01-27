@@ -1,0 +1,86 @@
+/* 페이지 전체 컨테이너 */
+.ending-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  /* 실제 내용 감싸는 박스 */
+  .ending-content {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    text-align: center;
+    max-width: 500px;
+    width: 80%;
+  }
+  
+  /* 타이틀 스타일 */
+  .ending-title {
+    font-size: 2.4rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  /* 결과 메시지 */
+  .ending-result {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: #666;
+  }
+  
+  /* 스코어보드(양 팀 스코어) 컨테이너 */
+  .ending-scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* 각 팀 점수 정보 */
+  .ending-score-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fafafa;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    min-width: 100px;
+  }
+  
+  .team-name {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .team-score {
+    font-size: 1.5rem;
+    color: #444;
+  }
+  
+  /* 하단 버튼 */
+  .ending-actions {
+    margin-top: 1rem;
+  }
+  
+  .ending-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ending-button:hover {
+    background-color: #0056b3;
+  }
+  

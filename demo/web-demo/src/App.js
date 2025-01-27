@@ -6,6 +6,7 @@ import StartPage from './pages/StartPage/StartPage.js';
 import SettingPage from './pages/SettingPage/SettingPage.js';
 import PitchingPage from './pages/PitchingPage/PitchingPage.js';
 import BattingPage from './pages/BattingPage/BattingPage.js';
+import EndingPage from './pages/EndingPage/EndingPage.js';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/setting" element={<SettingPage />} />
         <Route path="/pitch" element={<PitchingPage />} />  
         <Route path="/bat" element={<BattingPage />} /> 
+        <Route path="/end" element={<EndingPage />} />
       </Routes>
     </Router>
   );

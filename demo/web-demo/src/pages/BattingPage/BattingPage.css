@@ -263,3 +263,37 @@
   text-align: center;
 }
 
+.bat-container {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* 던지기 버튼 스타일 */
+.bat-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.bat-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.bat-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.bat-button:active {
+  background-color: #1e7e34;
+}

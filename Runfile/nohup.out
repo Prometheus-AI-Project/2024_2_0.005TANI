@@ -1,0 +1,835 @@
+INFO:     Will watch for changes in these directories: ['/home/mins/metown/Runfile']
+INFO:     Uvicorn running on http://192.168.45.135:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [124122] using WatchFiles
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [124124]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [124124]
+INFO:     Stopping reloader process [124122]
+INFO:     Will watch for changes in these directories: ['/home/mins/metown/Runfile']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [124151] using WatchFiles
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [124153]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:35900 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35900 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.45.185:60651 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58784 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58784 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.45.198:55201 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.45.198:55201 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:48512 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [124153]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127208]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127208]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127222]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127222]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127240]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127240]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127243]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127243]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127256]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127256]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127269]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127269]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127272]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:40604 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44212 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127272]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127842]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127842]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127855]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:43862 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127855]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127869]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:33312 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127869]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127882]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52958 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127882]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127895]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51450 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127895]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127908]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:45264 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127908]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127932]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51480 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127932]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127945]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:36174 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127945]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127986]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:44370 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127986]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [127999]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [127999]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128002]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60092 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128002]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128015]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128015]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128029]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:49324 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128029]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128042]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128042]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128055]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128055]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128069]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51254 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128069]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128082]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128082]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128096]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:42730 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128096]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128109]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56814 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128109]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128132]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128132]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128138]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:45080 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128138]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128151]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:37678 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128151]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128165]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128165]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128178]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54826 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128178]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128191]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128191]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128206]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:38170 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128206]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128220]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:50550 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128220]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128243]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:49190 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128243]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128257]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:48490 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128257]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128270]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128270]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128283]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:45614 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128283]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128296]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:45628 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128296]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128311]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:35378 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128311]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128335]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52358 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52358 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128335]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128358]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:42436 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128358]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128371]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:40850 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128371]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128385]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60026 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128385]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128399]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53924 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128399]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128414]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51636 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'static/html_templates.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128414]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128437]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59176 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'api/endpoints.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128437]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128509]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'api/endpoints.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128509]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128512]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'api/endpoints.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128512]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128527]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'api/endpoints.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128527]
+/home/mins/anaconda3/lib/python3.8/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_type" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [128540]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'core/model_runner.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [128540]
+Process SpawnProcess-53:
+Traceback (most recent call last):
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/home/mins/anaconda3/lib/python3.8/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "uvloop/loop.pyx", line 1517, in uvloop.loop.Loop.run_until_complete
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/home/mins/anaconda3/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/mins/metown/Runfile/main.py", line 2, in <module>
+    from api import endpoints
+  File "/home/mins/metown/Runfile/api/endpoints.py", line 6, in <module>
+    from core.model_runner import run_convert_glomap, run_generate_mask, run_train
+  File "/home/mins/metown/Runfile/core/model_runner.py", line 40
+    run_train(path, save_iterations,
+    ^
+IndentationError: unexpected indent
+WARNING:  WatchFiles detected changes in 'core/model_runner.py'. Reloading...
+Process SpawnProcess-54:
+Traceback (most recent call last):
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/home/mins/anaconda3/lib/python3.8/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "uvloop/loop.pyx", line 1517, in uvloop.loop.Loop.run_until_complete
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/home/mins/anaconda3/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/mins/metown/Runfile/main.py", line 2, in <module>
+    from api import endpoints
+  File "/home/mins/metown/Runfile/api/endpoints.py", line 6, in <module>
+    from core.model_runner import run_convert_glomap, run_generate_mask, run_train
+  File "/home/mins/metown/Runfile/core/model_runner.py", line 40
+    run_train(path, save_iterations,
+    ^
+IndentationError: unexpected indent
+WARNING:  WatchFiles detected changes in 'core/model_runner.py'. Reloading...
+Process SpawnProcess-55:
+Traceback (most recent call last):
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/home/mins/anaconda3/lib/python3.8/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "uvloop/loop.pyx", line 1517, in uvloop.loop.Loop.run_until_complete
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/home/mins/anaconda3/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/mins/metown/Runfile/main.py", line 2, in <module>
+    from api import endpoints
+  File "/home/mins/metown/Runfile/api/endpoints.py", line 6, in <module>
+    from core.model_runner import run_convert_glomap, run_generate_mask, run_train
+  File "/home/mins/metown/Runfile/core/model_runner.py", line 40
+    run_train(path, save_iterations,
+    ^
+IndentationError: unexpected indent
+WARNING:  WatchFiles detected changes in 'core/model_runner.py'. Reloading...
+Process SpawnProcess-56:
+Traceback (most recent call last):
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/mins/anaconda3/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/home/mins/anaconda3/lib/python3.8/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "uvloop/loop.pyx", line 1517, in uvloop.loop.Loop.run_until_complete
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/home/mins/anaconda3/lib/python3.8/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/home/mins/anaconda3/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/mins/metown/Runfile/main.py", line 2, in <module>
+    from api import endpoints
+  File "/home/mins/metown/Runfile/api/endpoints.py", line 6, in <module>
+    from core.model_runner import run_convert_glomap, run_generate_mask, run_train
+  File "/home/mins/metown/Runfile/core/model_runner.py", line 40
+    run_train(path, save_iterations,
+    ^
+IndentationError: unexpected indent
+INFO:     Stopping reloader process [124151]
