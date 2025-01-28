@@ -17,6 +17,15 @@ function PitchingPage() {
   const [balls, setBalls] = useState(0);
   const [runners, setRunners] = useState(0);
   const [hitterOrder, setHitterOrder] = useState(0);
+
+  const [AIassistant, setAIassistant] = useState(false);
+  const [pitchAssistValue, setPitchAssistValue] = useState([
+    0.300, 0.250, 0.275, 0.310, 0.200,
+    0.400, 0.300, 0.280, 0.250, 0.320,
+    0.220, 0.270, 0.260, 0.290, 0.310,
+    0.230, 0.240, 0.210, 0.280, 0.350,
+    0.260, 0.270, 0.200, 0.300, 0.250,
+  ]);
   const navigate = useNavigate(); // React Router의 navigate 함수 사용
 
   const resetCount = () => {
@@ -31,13 +40,7 @@ function PitchingPage() {
 
   // 25칸(5x5) 박스를 그리기 위해 Array.from()을 활용
   const zones = Array.from({ length: 25 }, (_, i) => i);
-  const battingAverage = [
-    0.300, 0.250, 0.275, 0.310, 0.200,
-    0.400, 0.300, 0.280, 0.250, 0.320,
-    0.220, 0.270, 0.260, 0.290, 0.310,
-    0.230, 0.240, 0.210, 0.280, 0.350,
-    0.260, 0.270, 0.200, 0.300, 0.250,
-  ];
+  
 
   const [pitchResult, setPitchResult] = useState(null);
 
@@ -152,10 +155,12 @@ useEffect(() => {
   }*/
 
   const getBoxClass = (value) => {
-    if (value >= 0.4) return "batting-zone-box red";
-    if (value >= 0.3) return "batting-zone-box orange";
-    if (value >= 0.2) return "batting-zone-box yellow";
-    return "zone-box"; // 기본 클래스
+    if (value >= 0.4) return "batting-assist-box red";
+    if (value >= 0.3) return "batting-assist-box orange";
+    if (value >= 0.2) return "batting-assist-box yellow";
+    if (value >= 0.1) return "batting-assist-box white";
+    if (value >= 0.0) return "batting-assist-box gray";
+    return "assist-box"; // 기본 클래스
   };
 
   const pitchTypes = ["직구", "슬라이더", "커브", "체인지업", "스플리터", "포크볼"];
@@ -195,13 +200,48 @@ useEffect(() => {
       const getResult  = await axios.post('http://localhost:8000/api/pitch', pitchData);
       
       setPitchResult(getResult.data);
+      setAIassistant(false);//경기 상황 변동 반영하여 새로운 AI 보조값 생성
+      
+    } catch (error) {
+      console.error("Error sending pitch data:", error);
+      alert("투구 정보 전송 중 오류가 발생했습니다.");
+    }
+
+   
+  };
+
+  const getAIAssistant = async () => {
+
+    const pitchAssistData = {
+      awayTeam: awayTeam || "NC",
+      hitterOrder: hitterOrder || 1,
+      strikes: strikes || 0,
+      balls: balls || 0,
+      runners: runners || 1, // 기본값 빈 배열
+    };
+
+
+    try {
+      const getResult  = await axios.post('http://localhost:8000/api/pitchAI', pitchAssistData);
+      
+      setPitchAssistValue(getResult.data);
       
       
     } catch (error) {
       console.error("Error sending pitch data:", error);
       alert("투구 정보 전송 중 오류가 발생했습니다.");
     }
+    // 여기서 원하는 동작(함수 실행, 상태 업데이트 등)을 처리
   };
+
+  useEffect(() => {
+    // aiAssistant가 false라면 handleAiAssistantFalse 함수 실행
+    if (AIassistant === false) {
+      getAIAssistant();
+    }
+  }, [AIassistant]); // aiAssistant 값이 변경될 때마다 이 훅이 재실행
+
+
   
   return (
     <div className="pitching-page">
@@ -242,12 +282,15 @@ useEffect(() => {
         </div>
   
         {/* 타율 표시 */}
-        <div className="batting-average-container">
-          {battingAverage.map((average, index) => (
-            <div key={index} className={getBoxClass(average)}>
-              {average.toFixed(3)}
-            </div>
-          ))}
+        <div className="ai-assistant-wrapper">
+          <h2>AI Predict Result</h2>
+          <div className="batting-average-container">
+            {pitchAssistValue.map((average, index) => (
+              <div key={index} className={getBoxClass(average)}>
+                {average.toFixed(3)}
+              </div>
+            ))}
+          </div>
         </div>
   
         {/* 투수가 던질 존(Zone) 선택 */}

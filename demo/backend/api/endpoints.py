@@ -6,7 +6,7 @@ from static.html_templates import get_main_page_html, show_team_info, ingame_htm
 import os
 from typing import Optional, List
 from pydantic import BaseModel, Field
-from core.model_runner import hitter_model, pitcher_model
+from core.model_runner import hitter_model, pitcher_model, pitcher_assistmodel
 from core.feat import hitter_inform, pitcher_inform
 import asyncio
 
@@ -25,7 +25,7 @@ async def main_page():
         raise HTTPException(status_code=500, detail=str(e))
     
     
-# 요청 데이터 모델
+# 플레이어 투구 시 데이터 모델
 class PitchData(BaseModel):
     pitchHand: str = Field(..., example="좌투") # 우투,좌투
     pitchForm: str = Field(..., example="오버핸드")  #투구 폼
@@ -39,7 +39,16 @@ class PitchData(BaseModel):
     balls: int = Field(..., example=0, ge=0, le=3)  # 볼 카운트 (0-3)
     runners : int = Field(..., example=0, ge=0, le=3) # 주자 진후 (0-3)
 
-# 요청 데이터 모델
+# 플레이어 보조 AI용 데이터 모델
+class PitchAssistData(BaseModel):
+    awayTeam: str = Field(..., example="키움")  # 어웨이 팀 이름
+    hitterOrder : int = Field(..., example=1, ge=1, le=9)
+    strikes: int = Field(..., example=0, ge=0, le=2)  # 스트라이크 카운트 (0-2)
+    balls: int = Field(..., example=0, ge=0, le=3)  # 볼 카운트 (0-3)
+    runners : int = Field(..., example=0, ge=0, le=3) # 주자 진후 (0-3)
+
+
+# 플레이어 배팅 시 데이터 모델
 class BatData(BaseModel):
     zone: int = Field(..., example=12, ge=1, le=25)  # 투구 영역 (0-24)
     awayTeam: str = Field(..., example="키움")  # 어웨이 팀 이름
@@ -77,39 +86,29 @@ async def process_pitch(data: PitchData):
 
 
 #투수 모델 정보 (for ai 보조)
-@router.post("/api/pitch_ai")
-async def process_pitch(data: PitchData):
+@router.post("/api/pitchAI")
+async def process_pitch(data: PitchAssistData):
 
     # 데이터 확인 (로그 출력)
     print(f"Received pitch data: {data}")
     try:
         # 예시: 요청 데이터 검증 및 처리
-        if data.zone < 0 or data.zone > 24:
-            raise HTTPException(status_code=400, detail="Invalid zone value. Must be between 0 and 24.")
-        
+       
         lh_or_rh, height = hitter_inform(data.awayTeam, data.hitterOrder)#상대 타자 좌타, 우타 정보 가져오기
         
-        pitch_result = pitcher_model(data.pitcherHeight, data.pitchForm, lh_or_rh, data.strikes, data.balls, data.runners)
-
+        #zone_result = pitcher_assistmodel( lh_or_rh, height, data.strikes, data.balls, data.runners)
+        
+        #임시 값 할당
+        zone_result = [0.1, 0.05, 0.2, 0.05, 0.0, 0.05, 0.1, 0.15, 0.1, 0.05, 
+                 0.0, 0.05, 0.05, 0.05, 0.1, 0.1, 0.05, 0.05, 0.05, 0.0,
+                 0.05, 0.1, 0.05, 0.0, 0.0]
+        return zone_result
     except Exception as e:
         # 에러 처리 및 클라이언트로 반환
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-#투수 모델 정보 (for ai 보조)
-@router.get("/api/pitch_ai/result")
-async def get_pitch_result():
-    # 예제 데이터 반환
-    
-    result  = [
-    0.300, 0.250, 0.275, 0.310, 0.200,
-    0.400, 0.300, 0.280, 0.250, 0.320,
-    0.220, 0.270, 0.260, 0.290, 0.310,
-    0.230, 0.240, 0.210, 0.280, 0.350,
-    0.260, 0.270, 0.200, 0.300, 0.250,
-    ]
-    
-    return result
+
 
 
 @router.post("/api/bat")
