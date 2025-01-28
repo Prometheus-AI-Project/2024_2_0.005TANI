@@ -151,44 +151,72 @@
       border-radius: 2px;
       transition: background-color 0.2s;
     }
+
     .zone-box:hover {
       background-color: rgba(255,255,255,0.6);
     }
 
-  .batting-average-container {
-    display: grid;
-    grid-template-columns: repeat(5, 40px);
-    grid-template-rows: repeat(5, 40px);
-    gap: 2px; /* 박스 간 간격 */
-    position: absolute;
-    top: 300px;
-    left: 50px;
-    width: 200px;
-    height: 200px;
-  }
+    .ai-assistant-wrapper {
+      position: absolute;
+      top: 200px;
+      left: 50px;
+      /* 원하는 크기나 추가 스타일을 지정해도 됩니다. */
+      width: 200px;  /* 임의 */
+      /* height: 300px;  필요하다면 지정 */
+      background-color: rgba(255, 255, 255, 0.7);
+      border: 1px solid #ccc; /* 테두리(옵션) */
+      padding: 10px;          /* 내부 여백(옵션) */
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 그림자(옵션) */
+      display: flex;
+      flex-direction: column;          /* 수직으로 쌓음 */
+      justify-content: center;         /* 수직 중앙 정렬 */
+      align-items: center;             /* 수평 중앙 정렬 */
+    }
+
+    .ai-assistant-wrapper h2 {
+      margin: 0;                       /* 기본 h2 margin 제거 */
+      margin-bottom: 10px;             /* 컨테이너와 약간의 간격 추가 */
+      text-align: center;
+    }
+    
+    /* 그리드 컨테이너: 5×5 배치 */
+    .batting-average-container {
+      display: grid;
+      grid-template-columns: repeat(5, 30px);
+      grid-template-rows: repeat(5, 40px);
+      gap: 1px;                         /* 박스 간 간격 */
+    }
   
 
-  .batting-zone-box {
+  .batting-assist-box {
     width: 100%; /* 박스 너비 */
     height: 100%; /* 박스 높이 */
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ccc;
- 
-    font-size: 14px;
+    border: px solid #ccc;
+    
+    font-size: 11px;
     background-color: #f9f9f9;
   }
-  .batting-zone-box.red {
+  .batting-assist-box.red {
     background-color: rgba(255, 0, 0, 0.5); /* 빨간색 */
   }
   
-  .batting-zone-box.orange {
+  .batting-assist-box.orange {
     background-color: rgba(255, 165, 0, 0.5); /* 주황색 */
   }
   
-  .batting-zone-box.yellow {
+  .batting-assist-box.yellow {
     background-color: rgba(255, 255, 0, 0.5); /* 노란색 */
+  }
+
+  .batting-assist-box.white {
+    background-color: rgba(230, 230, 228, 0.764); /* 노란색 */
+  }
+
+  .batting-assist-box.gray {
+    background-color: rgba(122, 122, 118, 0.5); /* 노란색 */
   }
 
   /* 구종 선택 컴포넌트 */

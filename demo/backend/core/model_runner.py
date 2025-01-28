@@ -1,4 +1,4 @@
-
+import numpy as np
 
 def pitcher_model(pitcherHeight, pitchHand, pitchForm, lh_or_rh, strikes, balls, runners):
     
@@ -114,7 +114,37 @@ def hitter_model(hiiter_height, pitchType, lp_or_rp, lh_or_rh, pitch_mechanic, s
     
     return results
     
+def pitcher_assistmodel(lh_or_rh, height, strike, ball, runner):
+    more_strike = 0
+    more_ball = 0
+    same_strike_ball=0
+    
+    if strike>ball:
+        more_strike=1
+    elif strike<ball:
+        more_ball=1
+    else:
+        same_strike_ball=1
+    
+    is_runner = 0
+    no_runner = 0
+    if runner>0:
+        is_runner=1
+    else:
+        no_runner = 1
+    results_1 =  hitter_ballcount_model(height, lh_or_rh, more_strike, more_ball, same_strike_ball)
 
+
+    results_2 =  hitter_runner_model(height, lh_or_rh,  is_runner, no_runner)
+        
+    arr1 = np.array(results_1)
+    arr2 = np.array(results_2)
+    
+    # 두 배열의 요소별 평균 계산
+    avg_arr = (arr1 + arr2) / 2.0
+    
+    # 다시 파이썬 리스트로 변환하여 반환
+    return avg_arr.tolist() 
 
 
 def pitch_ballcount_model(pitcher_height, lp_or_rp, pitcher_form, more_strike, more_ball, same_strike_ball):
