@@ -1,6 +1,7 @@
 import numpy as np
+from core.feat import pitch_model_result, bat_model_result
 
-def pitcher_model(pitcherHeight, pitchHand, pitchForm, lh_or_rh, strikes, balls, runners):
+def pitcher_model(player_pick ,pitcherHeight, pitchHand, pitchForm, lh_or_rh, strikes, balls, runners):
     
     
     #좌투/우투 피처 세팅
@@ -63,7 +64,14 @@ def pitcher_model(pitcherHeight, pitchHand, pitchForm, lh_or_rh, strikes, balls,
 
     #model inference
     
-    results = {}
+    
+    #call result func
+    #ex, 
+    pitcher_model_top3 = [17, 3, 23]
+    hit_percentage = [0.1, 0.05, 0.2, 0.05, 0.0, 0.05, 0.1, 0.15, 0.1, 0.05, 
+                 0.1, 0.15, 0.25, 0.15, 0.2, 0.2, 0.15, 0.25, 0.25, 0.1,
+                 0.05, 0.1, 0.05, 0.1, 0.1]
+    results = pitch_model_result(pitcher_model_top3, hit_percentage, player_pick)
     
     return results
     
@@ -100,14 +108,14 @@ def hitter_model(hiiter_height, pitchType, lp_or_rp, lh_or_rh, pitch_mechanic, s
     else :
         lh = 1
     
-    results_1 =  hitter_ballcount_model(hitter_height, lh_or_rh, more_strike, more_ball, same_strike_ball)
+    #results_1 =  hitter_ballcount_model(hitter_height, lh_or_rh, more_strike, more_ball, same_strike_ball)
 
 
-    results_2 =  hitter_runner_model(hitter_height, lh_or_rh,  is_runner, no_runner)
+    #results_2 =  hitter_runner_model(hitter_height, lh_or_rh,  is_runner, no_runner)
         
-    results_3 =  hitter_lp_or_rp_model(hitter_height, lh_or_rh, pitcher_form, lp, rp)
+    #results_3 =  hitter_lp_or_rp_model(hitter_height, lh_or_rh, pitcher_form, lp, rp)
     
-    results_4 =  hitter_pitchtype_model(hitter_height, lh_or_rh, pitch_type)
+    #results_4 =  hitter_pitchtype_model(hitter_height, lh_or_rh, pitch_type)
     
     
     results = {}
@@ -179,3 +187,4 @@ def hitter_lp_or_rp_model(hitter_height, lh_or_rh, pitcher_form, lp, rp):
 def hitter_pitchtype_model(hitter_height, lh_or_rh, pitch_type):
     #inference 수행
     return 0
+
