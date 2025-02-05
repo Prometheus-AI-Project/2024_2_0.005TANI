@@ -15,13 +15,13 @@ function BattingPage() {
 
   const zones = Array.from({ length: 25 }, (_, i) => i);
 
-  const battingAverage = [
+  const [pitchingProbability, setPitchingProbability] = useState([
     0.300, 0.250, 0.275, 0.310, 0.200,
     0.400, 0.300, 0.280, 0.250, 0.320,
     0.220, 0.270, 0.260, 0.290, 0.310,
     0.230, 0.240, 0.210, 0.280, 0.350,
     0.260, 0.270, 0.200, 0.300, 0.250,
-  ];
+  ]);
 
   const [clickedZone, setClickedZone] = useState(null); // 클릭된 버튼 상태 저장
   const [showPopup, setShowPopup] = useState(false); // 팝업 상태
@@ -73,42 +73,75 @@ function BattingPage() {
     setDecision(choice); // 선택한 "칠래" 또는 "안 칠래" 상태 저장
     console.log(`User decision: ${choice}`);
   };
-
-  const handleBat = async () => {
-    setBatResult(null);
-    if (clickedZone === null) {
-      alert("배팅 영역을 선택하세요.");
-      return;
-    }
-
+  
+  const handleBat = async (mode) => {
+  
+    
+  
+    // 공통으로 사용할 데이터 객체 생성
     const batData = {
       zone: clickedZone !== null ? clickedZone : 0, // 기본값 0
       awayTeam: awayTeam || "NC",
-      homeTeam : homeTeam || "SSG",
+      homeTeam: homeTeam || "SSG",
       hitterOrder: hitterOrder || 1,
       outs: outs || 0,
       strikes: strikes || 0,
       balls: balls || 0,
-      runners: runners || 1, // 기본값 빈 배열
+      runners: runners || 1,
     };
 
-    try {
-      const getResult  = await axios.post('http://localhost:8000/api/bat', batData);
-      
-      setBatResult(getResult.data);
-      
-      
-    } catch (error) {
-      console.error("Error sending pitch data:", error);
-      alert("배팅 정보 전송 중 오류가 발생했습니다.");
+    const batAssistData = {
+      awayTeam: awayTeam || "NC",
+      homeTeam: homeTeam || "SSG",
+      hitterOrder: hitterOrder || 1,
+      outs: outs || 0,
+      strikes: strikes || 0,
+      balls: balls || 0,
+      runners: runners || 1,
+    };
+  
+    // 모드에 따른 분기 처리
+    if (mode === "bat") {
+      // 공통으로 배팅 영역 선택 확인
+      if (clickedZone === null) {
+        alert("배팅 영역을 선택하세요.");
+        return;
+      }
+      setBatResult(null);
+      try {
+        const getResult = await axios.post('http://localhost:8000/api/bat', batData);
+        setBatResult(getResult.data);
+      } catch (error) {
+        console.error("Error sending pitch data:", error);
+        alert("배팅 정보 전송 중 오류가 발생했습니다.");
+      }
+    } else if (mode === "batai") {
+      try {
+        // 예시: batai 모드에서는 다른 API 엔드포인트를 호출
+        const getpitchingProbability = await axios.post('http://localhost:8000/api/batAI', batAssistData);
+        setPitchingProbability(getpitchingProbability.data);
+
+      } catch (error) {
+        console.error("Error sending bat AI data:", error);
+        alert("배팅 AI 정보 전송 중 오류가 발생했습니다.");
+      }
+    } else {
+      alert("알 수 없는 모드입니다.");
     }
 
-  }
+  };
+  
+  // 페이지가 처음 로드될 때 handleBat('batai')를 호출하여 pitchingProbability를 업데이트
+  useEffect(() => {
+    handleBat("batai");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     // batResult가 null이면 로직 실행 안 함
     if (batResult === null) return;
     alert(batResult)
+
     const handleBatResult = () => {
       switch (batResult) {
         case 'homerun':
@@ -181,9 +214,11 @@ function BattingPage() {
       
     };
   
-    // 실제 로직 실행s
+    // 실제 로직 실행
     handleBatResult();
-  
+
+    //bat 결과 반영 후 batai 최신화
+    handleBat('batai');
     // 처리 완료 후 batResult를 다시 null로 만들어 재실행 방지
     setBatResult(null);
   
@@ -211,7 +246,7 @@ function BattingPage() {
         setHitterOrder(0);
       }
     }, [hitterOrder]);
-  // `타율이 ${battingAverage[index]}인 zone ${index + 1}이 선택되었습니다.`
+  // `타율이 ${pitchingProbability[index]}인 zone ${index + 1}이 선택되었습니다.`
   
   return (
     <div className="batting-page-container">
@@ -245,7 +280,7 @@ function BattingPage() {
 
         {/* 통합된 5x5 그리드 */}
       <div className="zone-container integrated-grid">
-        {battingAverage.map((average, index) => (
+        {pitchingProbability.map((average, index) => (
           <button
             key={index}
             className={getBoxClass(average)}
@@ -259,7 +294,7 @@ function BattingPage() {
       {showPopup && clickedZone !== null && (
        <div className="popup">
           <p>
-            {clickedZone + 1}번 존이 선택되었습니다. 타율: {battingAverage[clickedZone].toFixed(3)}
+            {clickedZone + 1}번 존이 선택되었습니다. AI 예측 구사율: {pitchingProbability[clickedZone].toFixed(3)}
           </p>
         </div>
       )}
@@ -300,15 +335,17 @@ function BattingPage() {
         </div>
       </div> */}
       {/* 치기 버튼 */}
+      
       <div className="bat-container">
-          <button
-            className="bat-button"
-            onClick={handleBat}
-            disabled={clickedZone === null}
-          >
-            치기
-          </button>
+        <button
+          className="bat-button"
+          onClick={() => handleBat("bat")}  // 콜백 함수를 전달
+          disabled={clickedZone === null}
+        >
+          치기
+        </button>
       </div>
+
       
       {/* 하단 타격 정보 예시 */}
       <div className="batting-info-bottom">

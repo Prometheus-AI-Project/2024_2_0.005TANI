@@ -187,7 +187,7 @@ useEffect(() => {
       pitchForm: pitchForm || "오버핸드", // 기본값 설정
       pitchType: selectedPitch || "직구",
       pitcherHeight: pitcherHeight || 185,
-      zone: selectedZone !== null ? selectedZone : 0, // 기본값 0
+      zone: selectedZone !== null ? selectedZone : 1, // 기본값 0
       awayTeam: awayTeam || "NC",
       hitterOrder: hitterOrder || 1,
       outs: outs || 0,
@@ -213,6 +213,7 @@ useEffect(() => {
   const getAIAssistant = async () => {
 
     const pitchAssistData = {
+      pitchHand : pitchHand || '좌투',
       awayTeam: awayTeam || "NC",
       hitterOrder: hitterOrder || 1,
       strikes: strikes || 0,

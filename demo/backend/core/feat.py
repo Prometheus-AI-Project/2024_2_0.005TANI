@@ -8,12 +8,14 @@ strike_zones = [7,8,9,12,13,14,15,17,18,19]
 
 def hitter_inform(team_inform, hitter_order):#팀, 타자의 타순 정보 입력 받아 타자 정보 리턴
     
+    
     with open('./data/player_data.json', 'r', encoding='UTF8') as f:
             json_data = json.load(f)
     for team in json_data["teams"]:
         if team["name"] == teamname_convert[team_inform]:
             hand = team["hitter"][hitter_order]["hand"]
             height = team["hitter"][hitter_order]["height_cm"]
+            
             return hand, height
     
 def pitcher_inform(team_inform):
@@ -21,8 +23,9 @@ def pitcher_inform(team_inform):
             json_data = json.load(f)
     for team in json_data["teams"]:
         if team["name"] == teamname_convert[team_inform]:
-            hand = team["pitcher"][0]["hand"]   
-            return hand
+            hand = team["pitcher"][0]["hand"]  
+            height = team["hitter"][0]["height_cm"] 
+            return hand, height
         
 
 def pitch_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레이어가 투수일 때 작동 함수
@@ -138,6 +141,9 @@ def check_hitzone(zone):#십자가 위치 -> 스트라이크, 볼 위치 판단
         else:
             pos_ball.append(zone+5) 
     return pos_strike, pos_ball
+
+
+
 
 def bat_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레이어가 타자일 때 작동 함수
     
