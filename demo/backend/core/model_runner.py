@@ -1,14 +1,27 @@
 import numpy as np
-from core.feat import pitch_model_result, bat_model_result
+from feat import pitch_model_result, bat_model_result
+import os
+import numpy as np
+from tensorflow.python.keras.models import load_model
+import tensorflow as tf
+import pickle
+from tensorflow.python.keras.layers import InputLayer as OriginalInputLayer
 
-def pitcher_model(player_pick ,pitcherHeight, pitchHand, pitchForm, lh_or_rh, strikes, balls, runners):
-    
+from tensorflow.python.keras.losses import MeanSquaredError
+from tensorflow.python.keras.mixed_precision import Policy
+
+def load_dtype_policy(config):
+    # 예: config == {'name': 'float32'}
+    return tf.keras.mixed_precision.Policy(config['name'])
+
+def pitcher_model(player_pick , pitcherHeight, pitchHand, pitchForm, pitchType, hitter_height, lh_or_rh,strikes, balls, runners):
+    print("start pitcher_model")
     
     #좌투/우투 피처 세팅
     if pitchHand =="좌투": #좌투가 0인지 1인지 확실하지 않음
-        lp_or_rp=1
+        lp_or_rp=0
     else:
-        lp_or_rp =0
+        lp_or_rp =1
     
     #투구 폼 세팅
     if pitchForm == "오버핸드":
@@ -20,171 +33,474 @@ def pitcher_model(player_pick ,pitcherHeight, pitchHand, pitchForm, lh_or_rh, st
         
 
     #볼카운트 모델 피처 세팅
-    more_strike = 0
-    more_ball = 0
-    same_strike_ball=0
-    
+    bc = 2
     if strikes>balls:
-        more_strike=1
+        bc=0
     elif strikes<balls:
-        more_ball=1
-    else:
-        same_strike_ball=1
+        bc=1
     
     #주자 유뮤 모델 피처
     is_runner = 0
-    no_runner = 0
     if runners>0:
         is_runner=1
-    else:
-        no_runner = 1
     
     #상대 타자 좌우타 모델 피처 세팅
-
-    lh = 0
-    rh = 0
-    
     if lh_or_rh =="Right":
-        rh=1
+        lh_or_rh = 1
     else :
-        lh = 1
+        lh_or_rh = 0
     
+    input_dict_forpitcher = {
+        "height": pitcherHeight,
+        "lp_or_rp": lp_or_rp,  # 1 = R, 0 = L (예시)
+        "pitch_mechanic": pitchform,
+        "lh_or_rh" : lh_or_rh,
+        "is_runner": is_runner,
+        "ballcount" : bc
+    }
 
     
-    results_1 = pitch_ballcount_model(pitcherHeight, lp_or_rp, pitchform, more_strike, more_ball, same_strike_ball)
-        
-
-
-    results_2 = pitch_runner_model(pitcherHeight, lp_or_rp, pitchform, is_runner, no_runner)
-        
-        
-    results_3 = pitch_lh_or_rh_model(pitcherHeight, lp_or_rp, pitchform, lh, rh)
+    pitcher_model_top3 = run_pitcher_model(input_dict_forpitcher, 'pitch_result')
     
+    input_dict_forhitter = {
+        "height": hitter_height,
+        "hand": lh_or_rh,  # 1 = R, 0 = L (예시)
+        "pitch_type(0-7)": pitchType,
+        "pitch_mechanic": lp_or_rp,
+        "is_runner": is_runner,
+        "ballcount" : bc
+    }
     
-
+    hit_percentage = run_hitter_model(input_dict_forhitter, 'bat_result')
+    
     #model inference
     
     
     #call result func
     #ex, 
-    pitcher_model_top3 = [17, 3, 23]
-    hit_percentage = [0.1, 0.05, 0.2, 0.05, 0.0, 0.05, 0.1, 0.15, 0.1, 0.05, 
-                 0.1, 0.15, 0.25, 0.15, 0.2, 0.2, 0.15, 0.25, 0.25, 0.1,
-                 0.05, 0.1, 0.05, 0.1, 0.1]
+    #pitcher_model_top3 = [17, 3, 23]
+    
+    
+    
+    #hit_percentage = [0.1, 0.05, 0.2, 0.05, 0.0, 0.05, 0.1, 0.15, 0.1, 0.05, 0.1, 0.15, 0.25, 0.15, 0.2, 0.2, 0.15, 0.25, 0.25, 0.1, 0.05, 0.1, 0.05, 0.1, 0.1]
+    
     results = pitch_model_result(pitcher_model_top3, hit_percentage, player_pick)
     
     return results
-    
-    
 
-    
-
-def hitter_model(hiiter_height, pitchType, lp_or_rp, lh_or_rh, pitch_mechanic, strike, ball, runner):
-    more_strike = 0
-    more_ball = 0
-    same_strike_ball=0
-    
+def pitcher_assistmodel(lp_or_rp, lh_or_rh, height, strike, ball, runner):
+    print("start pitcher_assistmodel")
+    #볼카운트 모델 피처 세팅
+    bc = 2
     if strike>ball:
-        more_strike=1
+        bc=0
     elif strike<ball:
-        more_ball=1
-    else:
-        same_strike_ball=1
+        bc=1
     
     is_runner = 0
-    no_runner = 0
     if runner>0:
         is_runner=1
-    else:
-        no_runner = 1
+
+    if lp_or_rp =="Right":
+        lp_or_rp=1
+    else :
+        lp_or_rp = 0
+    
+    
     
     #상대 타자 좌우타 모델 피처 세팅
 
-    lh = 0
-    rh = 0
-    
     if lh_or_rh =="Right":
-        rh=1
+        lh_or_rh=1
     else :
-        lh = 1
-    
-    #results_1 =  hitter_ballcount_model(hitter_height, lh_or_rh, more_strike, more_ball, same_strike_ball)
-
-
-    #results_2 =  hitter_runner_model(hitter_height, lh_or_rh,  is_runner, no_runner)
+        lh_or_rh = 0
         
-    #results_3 =  hitter_lp_or_rp_model(hitter_height, lh_or_rh, pitcher_form, lp, rp)
+    input_dict = {
+        "height": height,
+        "hand": lh_or_rh,
+        "pitch_mechanic": lp_or_rp,#hitter 모델 pitch_mechanic 피처 확인해야됨!!
+        "is_runner": is_runner,
+        "ballcount" : bc
+    }
     
-    #results_4 =  hitter_pitchtype_model(hitter_height, lh_or_rh, pitch_type)
     
     
-    results = {}
-    
-    return results
-    
-def pitcher_assistmodel(lh_or_rh, height, strike, ball, runner):
-    more_strike = 0
-    more_ball = 0
-    same_strike_ball=0
-    
-    if strike>ball:
-        more_strike=1
-    elif strike<ball:
-        more_ball=1
-    else:
-        same_strike_ball=1
-    
-    is_runner = 0
-    no_runner = 0
-    if runner>0:
-        is_runner=1
-    else:
-        no_runner = 1
-    results_1 =  hitter_ballcount_model(height, lh_or_rh, more_strike, more_ball, same_strike_ball)
 
-
-    results_2 =  hitter_runner_model(height, lh_or_rh,  is_runner, no_runner)
-        
-    arr1 = np.array(results_1)
-    arr2 = np.array(results_2)
+    avg_arr = run_hitter_model(input_dict, 'batai_result')
     
-    # 두 배열의 요소별 평균 계산
-    avg_arr = (arr1 + arr2) / 2.0
     
     # 다시 파이썬 리스트로 변환하여 반환
     return avg_arr.tolist() 
-
-
-def pitch_ballcount_model(pitcher_height, lp_or_rp, pitcher_form, more_strike, more_ball, same_strike_ball):
-    #inference 수행
-    return 0
-
-
-def pitch_runner_model(pitcher_height, lp_or_rp, pitcher_form, is_runner, no_runner):
-    #inference 수행
-    return 0
-    
-def pitch_lh_or_rh_model(pitcher_height, lp_or_rp, pitcher_form, lh, rh):
-    #inference 수행
-    return 0
     
 
 
-
-def hitter_ballcount_model(hitter_height, lh_or_rh, more_strike, more_ball, same_strike_ball):
-    #inference 수행
-    return 0
-
-
-def hitter_runner_model(hitter_height, lh_or_rh,  is_runner, no_runner):
-    #inference 수행
-    return 0
+def run_pitcher_model(input_dict, mode):
+    print("start run_pitcher_model")
+    custom_objects = {'mse': MeanSquaredError(),
+                      'InputLayer': CustomInputLayer,
+                      'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])}
     
-def hitter_lp_or_rp_model(hitter_height, lh_or_rh, pitcher_form, lp, rp):
-    #inference 수행
-    return 0
+    
+    checkpoint_hitter    = "../checkpoints/pitcher/checkpoint/hitter_lh_or_rh_checkpoint.h5"
+    checkpoint_ballcount = "../checkpoints/pitcher/checkpoint/hitter_BallCount_checkpoint.h5"
+    checkpoint_runner   = "../checkpoints/pitcher/checkpoint/hitter_runner_checkpoint.h5"
 
-def hitter_pitchtype_model(hitter_height, lh_or_rh, pitch_type):
-    #inference 수행
-    return 0
+    model_5 = load_model(checkpoint_ballcount, custom_objects=custom_objects)
+    model_6 = load_model(checkpoint_hitter,   custom_objects=custom_objects)
+    model_7 = load_model(checkpoint_runner,    custom_objects=custom_objects)
 
+
+    with open('../checkpoints/pitcher/scaler/scaler_X_hit_ballcount.pkl', 'rb') as f:
+        scaler_X_5 = pickle.load(f)
+    with open('../checkpoints/pitcher/scaler/scaler_X_hit_lh_or_rh.pkl', 'rb') as f:
+        scaler_X_6 = pickle.load(f)
+    with open('../checkpoints/pitcher/scaler/scaler_X_hit_runner.pkl', 'rb') as f:
+        scaler_X_7 = pickle.load(f)
+
+    input_cols_5 = ["height", "lp_or_rp", "pitch_mechanic","ballcount" ]
+    input_cols_6 = ["height", "lp_or_rp", "pitch_mechanic","lh_or_rh"]
+    input_cols_7 = ["height", "lp_or_rp", "pitch_mechanic","is_runner"]
+
+    # zone 이름
+    zone_cols = [f"zone{i}" for i in range(1, 26)]
+
+    preds = []
+
+    y_pred_5 = predict_zones_single_sample(
+        model=model_5,
+        scaler_X=scaler_X_5,
+        input_dict=input_dict,
+        input_cols=input_cols_5
+    )
+    preds.append(y_pred_5)
+
+    y_pred_6 = predict_zones_single_sample(
+        model=model_6,
+        scaler_X=scaler_X_6,
+        input_dict=input_dict,
+        input_cols=input_cols_6
+    )
+    preds.append(y_pred_6)
+
+    y_pred_7 = predict_zones_single_sample(
+        model=model_7,
+        scaler_X=scaler_X_7,
+        input_dict=input_dict,
+        input_cols=input_cols_7
+    )
+    preds.append(y_pred_7)
+        
+    preds = np.array(preds) 
+    avg_pred = preds.mean(axis=0)
+    
+     
+    if mode == "pitch_model":
+        top_3_indices = np.argsort(avg_pred)[-3:][::-1]
+        return top_3_indices
+    else:
+        return avg_pred
+
+
+
+#=================About hitter model=======================
+#hitter model 데이터 크롤링 방식
+"""
+"우투": 0, "좌투": 1,
+"우타": 1, "좌타": 0,
+"주자없음":0, "주자있음": 1,
+"스트라이크 > 볼" : 0, "볼 > 스트라이크" : 1, "스트라이크 = 볼" : 2
+"""
+
+def hitter_model(player_pick, hitter_height, lh_or_rh, pitcher_height, lp_or_rp, strike, ball, runner):
+    
+    print("start hitter_model")
+    
+    bc = 2
+    if strike>ball:
+        bc=0
+    elif strike<ball:
+        bc=1
+    
+    is_runner = 0
+    if runner>0:
+        is_runner=1
+
+    if lp_or_rp =="Left":
+        lp_or_rp=1
+    else :
+        lp_or_rp = 0
+    
+    
+    
+    #상대 타자 좌우타 모델 피처 세팅
+
+    if lh_or_rh =="Right":
+        lh_or_rh=1
+    else :
+        lh_or_rh = 0
+    
+    input_dict_forpitcher = {
+        "height": pitcher_height,
+        "lp_or_rp": lp_or_rp,  # 1 = R, 0 = L (예시)
+        "pitch_mechanic": 0,
+        "lh_or_rh" : lh_or_rh,
+        "is_runner": is_runner,
+        "ballcount" : bc
+    }
+
+    
+    pitcher_model_top3 = run_pitcher_model(input_dict_forpitcher, 'pitch_result')
+    
+    
+    input_dict_forhitter = {
+        "height": hitter_height,
+        "hand": lh_or_rh,  # 1 = R, 0 = L (예시)
+        "pitch_mechanic": lp_or_rp,
+        "is_runner": is_runner,
+        "ballcount" : bc
+    }
+
+    hit_percentage = run_hitter_model(input_dict_forhitter, 'batai_result')
+    
+    
+    results = bat_model_result(pitcher_model_top3, hit_percentage, player_pick)
+    
+    
+    
+    return results
+    
+
+
+
+def hitter_assistmodel(lh_or_rh,  pitcher_height,  lp_or_rp, strike, ball, runner ):
+    print("start hitter_assistmodel")
+    
+    bc = 2
+    if strike>ball:
+        bc=0
+    elif strike<ball:
+        bc=1
+    
+    is_runner = 0
+    if runner>0:
+        is_runner=1
+
+    if lp_or_rp =="Left":
+        lp_or_rp=1
+    else :
+        lp_or_rp = 0
+    
+    
+    
+    #상대 타자 좌우타 모델 피처 세팅
+
+    if lh_or_rh =="Right":
+        lh_or_rh=1
+    else :
+        lh_or_rh = 0
+    
+    input_dict_forpitcher = {
+        "height": pitcher_height,
+        "lp_or_rp": lp_or_rp,  # 1 = R, 0 = L (예시)
+        "pitch_mechanic": 0,
+        "lh_or_rh" : lh_or_rh,
+        "is_runner": is_runner,
+        "ballcount" : bc
+    }
+
+    
+    ave = run_pitcher_model(input_dict_forpitcher, 'pitcai_result')
+    
+
+    
+    
+    return ave
+    
+
+
+def run_hitter_model(input_dict, mode):
+    print("start run_hitter_model")
+    
+    if  mode == 'bat_result':
+        custom_objects = {'mse': MeanSquaredError(),
+                          'InputLayer': CustomInputLayer,
+                          'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])}
+
+        # -----------------------------
+        # (2) 체크포인트(모델) 파일 경로
+        # -----------------------------
+        checkpoint_pitchtype = "../checkpoints/hitter/checkpoint/Pitchtype_checkpoint.h5"
+        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.h5"
+        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.h5"
+        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.h5"
+
+        # -----------------------------
+        # (3) 모델 로드
+        # -----------------------------
+        model_1 = load_model(checkpoint_pitchtype, custom_objects=custom_objects)
+        model_2 = load_model(checkpoint_pitcher,   custom_objects=custom_objects)
+        model_3 = load_model(checkpoint_runner,    custom_objects=custom_objects)
+        model_4 = load_model(checkpoint_ballcount, custom_objects=custom_objects)
+
+        with open('../checkpoints/hitter/scaler/scaler_X_pitchtype.pkl', 'rb') as f:
+            scaler_X_1 = pickle.load(f)
+        with open('../checkpoints/hitter/scaler/scaler_X_pitcher.pkl', 'rb') as f:
+            scaler_X_2 = pickle.load(f)
+        with open('../checkpoints/hitter/scaler/scaler_X_runner.pkl', 'rb') as f:
+            scaler_X_3 = pickle.load(f)
+        with open('../checkpoints/hitter/scaler/scaler_X_ballcount.pkl', 'rb') as f:
+            scaler_X_4 = pickle.load(f)
+
+        
+        input_cols_1 = ["height", "hand", "pitch_type(0-7)"]
+        input_cols_2 = ["height", "hand", "pitch_mechanic"]
+        input_cols_3 = ["height", "hand", "is_runner"]
+        input_cols_4 = ["height", "hand", "ballcount"]
+
+        # zone 이름
+        zone_cols = [f"zone{i}" for i in range(1, 26)]
+
+        preds = []
+
+        y_pred_1 = predict_zones_single_sample(
+            model=model_1,
+            scaler_X=scaler_X_1,
+            input_dict=input_dict,
+            input_cols=input_cols_1
+        )
+        preds.append(y_pred_1)
+
+        y_pred_2 = predict_zones_single_sample(
+            model=model_2,
+            scaler_X=scaler_X_2,
+            input_dict=input_dict,
+            input_cols=input_cols_2
+        )
+        preds.append(y_pred_2)
+
+        y_pred_3 = predict_zones_single_sample(
+            model=model_3,
+            scaler_X=scaler_X_3,
+            input_dict=input_dict,
+            input_cols=input_cols_3
+        )
+        preds.append(y_pred_3)
+
+        y_pred_4 = predict_zones_single_sample(
+            model=model_4,
+            scaler_X=scaler_X_4,
+            input_dict=input_dict,
+            input_cols=input_cols_4
+        )
+        preds.append(y_pred_4)
+
+        preds = np.array(preds) 
+        avg_pred = preds.mean(axis=0) 
+        
+        
+        return avg_pred
+    
+    else:#batai_result
+        custom_objects = {'mse': MeanSquaredError(),
+                          'InputLayer': CustomInputLayer,
+                          'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])}
+
+        # -----------------------------
+        # (2) 체크포인트(모델) 파일 경로
+        # -----------------------------
+        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.h5"
+        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.h5"
+        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.h5"
+
+        # -----------------------------
+        # (3) 모델 로드
+        # -----------------------------
+        model_2 = load_model(checkpoint_pitcher,   custom_objects=custom_objects)
+        model_3 = load_model(checkpoint_runner,    custom_objects=custom_objects)
+        model_4 = load_model(checkpoint_ballcount, custom_objects=custom_objects)
+
+        with open('../checkpoints/hitter/scaler/scaler_X_pitcher.pkl', 'rb') as f:
+            scaler_X_2 = pickle.load(f)
+        with open('../checkpoints/hitter/scaler/scaler_X_runner.pkl', 'rb') as f:
+            scaler_X_3 = pickle.load(f)
+        with open('../checkpoints/hitter/scaler/scaler_X_ballcount.pkl', 'rb') as f:
+            scaler_X_4 = pickle.load(f)
+
+        
+        input_cols_2 = ["height", "hand", "pitch_mechanic"]
+        input_cols_3 = ["height", "hand", "is_runner"]
+        input_cols_4 = ["height", "hand", "ballcount"]
+
+        # zone 이름
+        zone_cols = [f"zone{i}" for i in range(1, 26)]
+
+        preds = []
+
+     
+
+        y_pred_2 = predict_zones_single_sample(
+            model=model_2,
+            scaler_X=scaler_X_2,
+            input_dict=input_dict,
+            input_cols=input_cols_2
+        )
+        preds.append(y_pred_2)
+
+        y_pred_3 = predict_zones_single_sample(
+            model=model_3,
+            scaler_X=scaler_X_3,
+            input_dict=input_dict,
+            input_cols=input_cols_3
+        )
+        preds.append(y_pred_3)
+
+        y_pred_4 = predict_zones_single_sample(
+            model=model_4,
+            scaler_X=scaler_X_4,
+            input_dict=input_dict,
+            input_cols=input_cols_4
+        )
+        preds.append(y_pred_4)
+
+        preds = np.array(preds) 
+        avg_pred = preds.mean(axis=0) 
+        return avg_pred
+
+
+def predict_zones_single_sample(model, scaler_X, input_dict, input_cols):
+    # 입력 칼럼에 해당하는 값들을 순서대로 가져옴
+    x_list = [input_dict[col] for col in input_cols]
+    x_array = np.array(x_list).reshape(1, -1)
+
+    # 스케일링
+    x_scaled = scaler_X.transform(x_array)
+
+    # 모델 예측 (출력 차원은 (1, 25)라고 가정)
+    y_pred = model.predict(x_scaled)
+    return y_pred.flatten()  # (25,)
+
+class CustomInputLayer(OriginalInputLayer):
+    def __init__(self, **kwargs):
+        # 'batch_shape' 키가 있다면 'batch_input_shape'로 변경
+        if 'batch_shape' in kwargs:
+            kwargs['batch_input_shape'] = kwargs.pop('batch_shape')
+        super(CustomInputLayer, self).__init__(**kwargs)
+
+    @classmethod
+    def from_config(cls, config):
+        # 모델 저장 시 config에 남아있는 'batch_shape' 키도 변환
+        if 'batch_shape' in config:
+            config['batch_input_shape'] = config.pop('batch_shape')
+        return cls(**config)
+    
+    
+def main():
+    
+    pitch_result = pitcher_model(12, 186, "좌투", "오버핸드", '커브', 181, 'Left', 0, 0, 1)
+
+    #zone_result = pitcher_assistmodel( "좌투", "Left", 181, 0, 0, 1)
+        
+    print(pitch_result)
+
+if __name__ == '__main__':
+    print(main())

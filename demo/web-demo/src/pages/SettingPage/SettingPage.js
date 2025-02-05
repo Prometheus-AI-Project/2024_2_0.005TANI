@@ -19,19 +19,31 @@ function SettingPage() {
   const pitchFormList = ['오버핸드','쓰리쿼터', '사이드암'];
 
   const handleStartGame = () => {
+    // 필수 필드 입력 여부 확인
     if (!homeTeam || !pitcherHeight || !pitchForm || !awayTeam) {
       setErrorMessage('모든 필드를 입력해주세요.');
       return;
     }
-    if (homeTeam == awayTeam){
+    
+    // 투수의 키가 숫자인지 및 160 ~ 200 사이인지 확인
+    const height = parseInt(pitcherHeight, 10);
+    if (isNaN(height) || height < 160 || height > 200) {
+      setErrorMessage('투수의 키는 160cm와 200cm 사이여야 합니다.');
+      return;
+    }
+    
+    // 플레이어 팀과 상대 팀이 동일한지 확인
+    if (homeTeam === awayTeam) {
       setErrorMessage('플레이어 팀과 상대 팀이 동일합니다! 서로 다른 팀을 선택해주세요.');
       return;
     }
+    
     setErrorMessage(''); // 오류 메시지 초기화
+    
     navigate('/pitch', {
       state: {
         homeTeam,
-        pitcherHeight,
+        pitcherHeight: height, // 숫자로 전달
         pitchHand,
         pitchForm,
         awayTeam
@@ -62,7 +74,7 @@ function SettingPage() {
             type="text"
             className="setting-input-box"
             value={pitcherHeight}
-            onChange={(e)=>setPitcherHeight(e.target.value)}
+            onChange={(e) => setPitcherHeight(e.target.value)}
             placeholder="예: 185"
           />
           <p className="setting-input-description">
@@ -116,7 +128,6 @@ function SettingPage() {
 
         <button className="start-game-button" onClick={handleStartGame}>Start Game</button>
       </div>
-
     </div>
   );
 }
