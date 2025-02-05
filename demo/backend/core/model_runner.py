@@ -5,10 +5,9 @@ import numpy as np
 from tensorflow.python.keras.models import load_model
 import tensorflow as tf
 import pickle
-from tensorflow.python.keras.layers import InputLayer as OriginalInputLayer
+#from tensorflow.python.keras.layers import InputLayer as OriginalInputLayer
+from tensorflow.keras.layers import InputLayer as OriginalInputLayer
 
-from tensorflow.python.keras.losses import MeanSquaredError
-from tensorflow.python.keras.mixed_precision import Policy
 
 def load_dtype_policy(config):
     # 예: config == {'name': 'float32'}
@@ -136,14 +135,15 @@ def pitcher_assistmodel(lp_or_rp, lh_or_rh, height, strike, ball, runner):
 
 def run_pitcher_model(input_dict, mode):
     print("start run_pitcher_model")
-    custom_objects = {'mse': MeanSquaredError(),
-                      'InputLayer': CustomInputLayer,
-                      'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])}
+    custom_objects = {'mse': tf.keras.losses.MeanSquaredError(),
+                          #'InputLayer': CustomInputLayer,
+                          #'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])
+                          }
     
     
-    checkpoint_hitter    = "../checkpoints/pitcher/checkpoint/hitter_lh_or_rh_checkpoint.h5"
-    checkpoint_ballcount = "../checkpoints/pitcher/checkpoint/hitter_BallCount_checkpoint.h5"
-    checkpoint_runner   = "../checkpoints/pitcher/checkpoint/hitter_runner_checkpoint.h5"
+    checkpoint_hitter    = "../checkpoints/pitcher/checkpoint/hitter_lh_or_rh_checkpoint.keras"
+    checkpoint_ballcount = "../checkpoints/pitcher/checkpoint/hitter_BallCount_checkpoint.keras"
+    checkpoint_runner   = "../checkpoints/pitcher/checkpoint/hitter_runner_checkpoint.keras"
 
     model_5 = load_model(checkpoint_ballcount, custom_objects=custom_objects)
     model_6 = load_model(checkpoint_hitter,   custom_objects=custom_objects)
@@ -322,17 +322,18 @@ def run_hitter_model(input_dict, mode):
     print("start run_hitter_model")
     
     if  mode == 'bat_result':
-        custom_objects = {'mse': MeanSquaredError(),
-                          'InputLayer': CustomInputLayer,
-                          'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])}
+        custom_objects = {'mse': tf.keras.losses.MeanSquaredError(),
+                          #'InputLayer': CustomInputLayer,
+                          #'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])
+                          }
 
         # -----------------------------
         # (2) 체크포인트(모델) 파일 경로
         # -----------------------------
-        checkpoint_pitchtype = "../checkpoints/hitter/checkpoint/Pitchtype_checkpoint.h5"
-        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.h5"
-        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.h5"
-        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.h5"
+        checkpoint_pitchtype = "../checkpoints/hitter/checkpoint/Pitchtype_checkpoint.keras"
+        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.keras"
+        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.keras"
+        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.keras"
 
         # -----------------------------
         # (3) 모델 로드
@@ -401,16 +402,17 @@ def run_hitter_model(input_dict, mode):
         return avg_pred
     
     else:#batai_result
-        custom_objects = {'mse': MeanSquaredError(),
-                          'InputLayer': CustomInputLayer,
-                          'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])}
+        custom_objects = {'mse': tf.keras.losses.MeanSquaredError(),
+                          #'InputLayer': CustomInputLayer,
+                          #'DTypePolicy': lambda **kwargs: Policy(kwargs['name'])
+                          }
 
         # -----------------------------
         # (2) 체크포인트(모델) 파일 경로
         # -----------------------------
-        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.h5"
-        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.h5"
-        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.h5"
+        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.keras"
+        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.keras"
+        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.keras"
 
         # -----------------------------
         # (3) 모델 로드
@@ -479,21 +481,7 @@ def predict_zones_single_sample(model, scaler_X, input_dict, input_cols):
     y_pred = model.predict(x_scaled)
     return y_pred.flatten()  # (25,)
 
-class CustomInputLayer(OriginalInputLayer):
-    def __init__(self, **kwargs):
-        # 'batch_shape' 키가 있다면 'batch_input_shape'로 변경
-        if 'batch_shape' in kwargs:
-            kwargs['batch_input_shape'] = kwargs.pop('batch_shape')
-        super(CustomInputLayer, self).__init__(**kwargs)
-
-    @classmethod
-    def from_config(cls, config):
-        # 모델 저장 시 config에 남아있는 'batch_shape' 키도 변환
-        if 'batch_shape' in config:
-            config['batch_input_shape'] = config.pop('batch_shape')
-        return cls(**config)
-    
-    
+        
 def main():
     
     pitch_result = pitcher_model(12, 186, "좌투", "오버핸드", '커브', 181, 'Left', 0, 0, 1)
