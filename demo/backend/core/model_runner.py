@@ -1,5 +1,5 @@
 import numpy as np
-from feat import pitch_model_result, bat_model_result
+from .feat import pitch_model_result, bat_model_result
 import os
 import numpy as np
 from tensorflow.python.keras.models import load_model
@@ -8,10 +8,21 @@ import pickle
 #from tensorflow.python.keras.layers import InputLayer as OriginalInputLayer
 from tensorflow.keras.layers import InputLayer as OriginalInputLayer
 
+pitchType_to_num = {
+    "투심":0,
+    "포심":1,
+    "커터":2,
+    "커브":3,
+    "슬라이더":4,
+    "체인지업":5,
+    "포크볼":6,
+}
 
 def load_dtype_policy(config):
     # 예: config == {'name': 'float32'}
     return tf.keras.mixed_precision.Policy(config['name'])
+
+
 
 def pitcher_model(player_pick , pitcherHeight, pitchHand, pitchForm, pitchType, hitter_height, lh_or_rh,strikes, balls, runners):
     print("start pitcher_model")
@@ -49,6 +60,8 @@ def pitcher_model(player_pick , pitcherHeight, pitchHand, pitchForm, pitchType, 
     else :
         lh_or_rh = 0
     
+    pitchType_num = pitchType_to_num[pitchType]
+    
     input_dict_forpitcher = {
         "height": pitcherHeight,
         "lp_or_rp": lp_or_rp,  # 1 = R, 0 = L (예시)
@@ -64,7 +77,7 @@ def pitcher_model(player_pick , pitcherHeight, pitchHand, pitchForm, pitchType, 
     input_dict_forhitter = {
         "height": hitter_height,
         "hand": lh_or_rh,  # 1 = R, 0 = L (예시)
-        "pitch_type(0-7)": pitchType,
+        "pitch_type(0-7)": pitchType_num,
         "pitch_mechanic": lp_or_rp,
         "is_runner": is_runner,
         "ballcount" : bc
@@ -141,20 +154,19 @@ def run_pitcher_model(input_dict, mode):
                           }
     
     
-    checkpoint_hitter    = "../checkpoints/pitcher/checkpoint/hitter_lh_or_rh_checkpoint.keras"
-    checkpoint_ballcount = "../checkpoints/pitcher/checkpoint/hitter_BallCount_checkpoint.keras"
-    checkpoint_runner   = "../checkpoints/pitcher/checkpoint/hitter_runner_checkpoint.keras"
+    checkpoint_hitter    = "./checkpoints/pitcher/checkpoint/hitter_lh_or_rh_checkpoint.keras"
+    checkpoint_ballcount = "./checkpoints/pitcher/checkpoint/hitter_BallCount_checkpoint.keras"
+    checkpoint_runner   = "./checkpoints/pitcher/checkpoint/hitter_runner_checkpoint.keras"
+    model_5 = tf.keras.models.load_model(checkpoint_ballcount, custom_objects=custom_objects)
+    model_6 = tf.keras.models.load_model(checkpoint_hitter,   custom_objects=custom_objects)
+    model_7 = tf.keras.models.load_model(checkpoint_runner,    custom_objects=custom_objects)
 
-    model_5 = load_model(checkpoint_ballcount, custom_objects=custom_objects)
-    model_6 = load_model(checkpoint_hitter,   custom_objects=custom_objects)
-    model_7 = load_model(checkpoint_runner,    custom_objects=custom_objects)
 
-
-    with open('../checkpoints/pitcher/scaler/scaler_X_hit_ballcount.pkl', 'rb') as f:
+    with open('./checkpoints/pitcher/scaler/scaler_X_hit_ballcount.pkl', 'rb') as f:
         scaler_X_5 = pickle.load(f)
-    with open('../checkpoints/pitcher/scaler/scaler_X_hit_lh_or_rh.pkl', 'rb') as f:
+    with open('./checkpoints/pitcher/scaler/scaler_X_hit_lh_or_rh.pkl', 'rb') as f:
         scaler_X_6 = pickle.load(f)
-    with open('../checkpoints/pitcher/scaler/scaler_X_hit_runner.pkl', 'rb') as f:
+    with open('./checkpoints/pitcher/scaler/scaler_X_hit_runner.pkl', 'rb') as f:
         scaler_X_7 = pickle.load(f)
 
     input_cols_5 = ["height", "lp_or_rp", "pitch_mechanic","ballcount" ]
@@ -312,7 +324,8 @@ def hitter_assistmodel(lh_or_rh,  pitcher_height,  lp_or_rp, strike, ball, runne
     ave = run_pitcher_model(input_dict_forpitcher, 'pitcai_result')
     
 
-    
+    if isinstance(ave, np.ndarray):
+        ave = ave.tolist()
     
     return ave
     
@@ -330,26 +343,26 @@ def run_hitter_model(input_dict, mode):
         # -----------------------------
         # (2) 체크포인트(모델) 파일 경로
         # -----------------------------
-        checkpoint_pitchtype = "../checkpoints/hitter/checkpoint/Pitchtype_checkpoint.keras"
-        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.keras"
-        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.keras"
-        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.keras"
+        checkpoint_pitchtype = "./checkpoints/hitter/checkpoint/Pitchtype_checkpoint.keras"
+        checkpoint_pitcher   = "./checkpoints/hitter/checkpoint/Pitcher_checkpoint.keras"
+        checkpoint_runner    = "./checkpoints/hitter/checkpoint/Runner_checkpoint.keras"
+        checkpoint_ballcount = "./checkpoints/hitter/checkpoint/BallCount_checkpoint.keras"
 
         # -----------------------------
         # (3) 모델 로드
         # -----------------------------
-        model_1 = load_model(checkpoint_pitchtype, custom_objects=custom_objects)
-        model_2 = load_model(checkpoint_pitcher,   custom_objects=custom_objects)
-        model_3 = load_model(checkpoint_runner,    custom_objects=custom_objects)
-        model_4 = load_model(checkpoint_ballcount, custom_objects=custom_objects)
+        model_1 = tf.keras.models.load_model(checkpoint_pitchtype, custom_objects=custom_objects)
+        model_2 = tf.keras.models.load_model(checkpoint_pitcher,   custom_objects=custom_objects)
+        model_3 = tf.keras.models.load_model(checkpoint_runner,    custom_objects=custom_objects)
+        model_4 = tf.keras.models.load_model(checkpoint_ballcount, custom_objects=custom_objects)
 
-        with open('../checkpoints/hitter/scaler/scaler_X_pitchtype.pkl', 'rb') as f:
+        with open('./checkpoints/hitter/scaler/scaler_X_pitchtype.pkl', 'rb') as f:
             scaler_X_1 = pickle.load(f)
-        with open('../checkpoints/hitter/scaler/scaler_X_pitcher.pkl', 'rb') as f:
+        with open('./checkpoints/hitter/scaler/scaler_X_pitcher.pkl', 'rb') as f:
             scaler_X_2 = pickle.load(f)
-        with open('../checkpoints/hitter/scaler/scaler_X_runner.pkl', 'rb') as f:
+        with open('./checkpoints/hitter/scaler/scaler_X_runner.pkl', 'rb') as f:
             scaler_X_3 = pickle.load(f)
-        with open('../checkpoints/hitter/scaler/scaler_X_ballcount.pkl', 'rb') as f:
+        with open('./checkpoints/hitter/scaler/scaler_X_ballcount.pkl', 'rb') as f:
             scaler_X_4 = pickle.load(f)
 
         
@@ -410,22 +423,22 @@ def run_hitter_model(input_dict, mode):
         # -----------------------------
         # (2) 체크포인트(모델) 파일 경로
         # -----------------------------
-        checkpoint_pitcher   = "../checkpoints/hitter/checkpoint/Pitcher_checkpoint.keras"
-        checkpoint_runner    = "../checkpoints/hitter/checkpoint/Runner_checkpoint.keras"
-        checkpoint_ballcount = "../checkpoints/hitter/checkpoint/BallCount_checkpoint.keras"
+        checkpoint_pitcher   = "./checkpoints/hitter/checkpoint/Pitcher_checkpoint.keras"
+        checkpoint_runner    = "./checkpoints/hitter/checkpoint/Runner_checkpoint.keras"
+        checkpoint_ballcount = "./checkpoints/hitter/checkpoint/BallCount_checkpoint.keras"
 
         # -----------------------------
         # (3) 모델 로드
         # -----------------------------
-        model_2 = load_model(checkpoint_pitcher,   custom_objects=custom_objects)
-        model_3 = load_model(checkpoint_runner,    custom_objects=custom_objects)
-        model_4 = load_model(checkpoint_ballcount, custom_objects=custom_objects)
+        model_2 = tf.keras.models.load_model(checkpoint_pitcher,   custom_objects=custom_objects)
+        model_3 = tf.keras.models.load_model(checkpoint_runner,    custom_objects=custom_objects)
+        model_4 = tf.keras.models.load_model(checkpoint_ballcount, custom_objects=custom_objects)
 
-        with open('../checkpoints/hitter/scaler/scaler_X_pitcher.pkl', 'rb') as f:
+        with open('./checkpoints/hitter/scaler/scaler_X_pitcher.pkl', 'rb') as f:
             scaler_X_2 = pickle.load(f)
-        with open('../checkpoints/hitter/scaler/scaler_X_runner.pkl', 'rb') as f:
+        with open('./checkpoints/hitter/scaler/scaler_X_runner.pkl', 'rb') as f:
             scaler_X_3 = pickle.load(f)
-        with open('../checkpoints/hitter/scaler/scaler_X_ballcount.pkl', 'rb') as f:
+        with open('./checkpoints/hitter/scaler/scaler_X_ballcount.pkl', 'rb') as f:
             scaler_X_4 = pickle.load(f)
 
         
@@ -481,14 +494,4 @@ def predict_zones_single_sample(model, scaler_X, input_dict, input_cols):
     y_pred = model.predict(x_scaled)
     return y_pred.flatten()  # (25,)
 
-        
-def main():
-    
-    pitch_result = pitcher_model(12, 186, "좌투", "오버핸드", '커브', 181, 'Left', 0, 0, 1)
 
-    #zone_result = pitcher_assistmodel( "좌투", "Left", 181, 0, 0, 1)
-        
-    print(pitch_result)
-
-if __name__ == '__main__':
-    print(main())

@@ -163,7 +163,7 @@ useEffect(() => {
     return "assist-box"; // 기본 클래스
   };
 
-  const pitchTypes = ["직구", "슬라이더", "커브", "체인지업", "스플리터", "포크볼"];
+  const pitchTypes = ["투심", "포심", "커터", "커브","슬라이더","체인지업", "포크볼"];
 
   const handlePitchSelect = (pitch) => {
     setSelectedPitch(pitch);
