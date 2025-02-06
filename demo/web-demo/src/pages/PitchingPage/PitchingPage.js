@@ -8,6 +8,12 @@ function PitchingPage() {
   const location = useLocation();
   const { homeTeam, pitcherHeight, pitchHand, pitchForm, awayTeam } = location.state || {};
   
+  const [showIntroPopup, setShowIntroPopup] = useState(true);
+
+  const handleIntroConfirm = () => {
+    setShowIntroPopup(false);
+  };
+
   // 점수 및 게임 상태 변수 관리
   const [homeScore, setHomeScore] = useState(7);
   const [awayScore, setAwayScore] = useState(7);
@@ -175,7 +181,7 @@ useEffect(() => {
     return "assist-box"; // 기본 클래스
   };
 
-  const pitchTypes = ["직구", "슬라이더", "커브", "체인지업", "스플리터", "포크볼"];
+  const pitchTypes = ["투심", "포심", "커터", "커브","슬라이더","체인지업", "포크볼"];
 
   const handlePitchSelect = (pitch) => {
     setSelectedPitch(pitch);
@@ -212,8 +218,11 @@ useEffect(() => {
       const getResult  = await axios.post('http://localhost:8000/api/pitch', pitchData);
       
       setPitchResult(getResult.data);
-      setAIassistant(false);//경기 상황 변동 반영하여 새로운 AI 보조값 생성
-      
+
+
+      await getAIAssistant();
+      // 필요하다면 AIassistant 상태 업데이트 (예: true로 전환)
+      setAIassistant(true);
     } catch (error) {
       console.error("Error sending pitch data:", error);
       alert("투구 정보 전송 중 오류가 발생했습니다.");
@@ -258,6 +267,22 @@ useEffect(() => {
   
   return (
     <div className="pitching-page">
+      {/* Intro */}
+    {showIntroPopup && (
+            <div className="intro-popup-overlay">
+              <div className="intro-popup">
+                <p>먼저 플레이어가 투수가 되어 AI 타자를 상대로 수비를 시작합니다.</p>
+                  
+
+                <p>*좌측의 AI 보조 장치가 예측한 타자의 출루율 참고해 투구를 진행하세요.</p>
+                
+                <button onClick={handleIntroConfirm}
+                style={{ fontSize: '20px', padding: '7px 14px' }}>
+                  확인</button>
+              </div>
+            </div>
+          )}
+
       {/* 스코어보드 */}
       <div className="pitching-scoreboard">
         {/* 왼쪽 팀 점수 */}
