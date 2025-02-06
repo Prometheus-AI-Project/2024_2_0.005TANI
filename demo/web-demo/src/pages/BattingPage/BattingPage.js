@@ -168,12 +168,15 @@ function BattingPage() {
           });
           setHitterOrder((prev) => prev + 1);
           resetCount();
+
+          navigate('/hit')
           break;
   
         case 'foul':
           if (strikes < 2) {
             setStrikes((prev) => prev + 1);
           }
+          navigate('/foul')
           break;
   
         case 'strike':
@@ -184,8 +187,10 @@ function BattingPage() {
               setHitterOrder((prev) => prev + 1);
               resetCount();
             }
+
             return newStrike;
           });
+          navigate('/homerun')
           break;
   
         case 'ball':
@@ -198,6 +203,8 @@ function BattingPage() {
             }
             return newBall;
           });
+          
+          navigate('/ball')
           break;
   
         case 'out':
@@ -207,6 +214,7 @@ function BattingPage() {
             resetCount();
             return newOut;
           });
+          navigate('/out')
           break;
   
         default:
@@ -348,24 +356,10 @@ function BattingPage() {
         </button>
       </div>
 
-      
-      {/* 하단 타격 정보 예시 */}
-      <div className="batting-info-bottom">
-        <div className="info-item">
-          <strong>타율</strong> 0.000
-        </div>
-        <div className="info-item">
-          <strong>홈런</strong> 0
-        </div>
-        <div className="info-item">
-          <strong>타점</strong> 0
-        </div>
-        <div className="info-item">
-          <strong>출루율</strong> 0.000
-        </div>
-      </div>
     </div>
   );
 }
+
+
 
 export default BattingPage;

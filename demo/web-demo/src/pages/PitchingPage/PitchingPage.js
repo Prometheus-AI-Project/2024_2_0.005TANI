@@ -59,6 +59,8 @@ useEffect(() => {
         }
         resetCount();
         setHitterOrder((prev) => prev + 1);
+
+        navigate('/homerun')
         break;
 
       case 'hit':
@@ -72,12 +74,16 @@ useEffect(() => {
         });
         setHitterOrder((prev) => prev + 1);
         resetCount();
+
+        navigate('/hit')
         break;
 
       case 'foul':
         if (strikes < 2) {
           setStrikes((prev) => prev + 1);
         }
+
+        navigate('/foul')
         break;
 
       case 'strike':
@@ -90,6 +96,8 @@ useEffect(() => {
           }
           return newStrike;
         });
+
+        navigate('/strike')
         break;
 
       case 'ball':
@@ -102,6 +110,8 @@ useEffect(() => {
           }
           return newBall;
         });
+
+        navigate('/ball')
         break;
 
       case 'out':
@@ -111,6 +121,8 @@ useEffect(() => {
           resetCount();
           return newOut;
         });
+
+        navigate('/out')
         break;
 
       default:

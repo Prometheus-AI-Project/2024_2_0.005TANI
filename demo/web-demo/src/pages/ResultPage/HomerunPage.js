@@ -1,37 +1,34 @@
-// src/pages/Homerun.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import homerunGif from '../../assets/img/background/homerun.gif';
-const HomerunPage = () => {
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';import Homerun from '../../assets/img/background/Homerun.png'; // OUT 이미지 import
+import homerun from '../../assets/img/background/homerun.gif'; // 배경 이미지 import
+import './Homerun.css';
+
+function HomerunPage() {
+
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // 이전 페이지에서 넘어온 데이터 (점수, 아웃, 주자 등) 유지
+  const gameState = location.state || {};
 
-  //영상 재생 후 원래 페이지로 돌아가기. 
-  React.useEffect(() => {
+  // 2초 후 자동으로 원래 페이지로 돌아가기
+  useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/bat');
-    }, 5000); // 5초 후 이동
+      navigate(-1); // 이전 페이지로 돌아가기
+    }, 2000); // 2초 후 복귀
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer); // 언마운트 시 타이머 정리
   }, [navigate]);
 
-
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h2>홈런입니다!</h2>
-      
-      {/* GIF 파일 표시 */}
-      <img
-        src={homerunGif}
-        alt="홈런 애니메이션"
-        width="640"
-        style={{ margin: '20px auto', display: 'block' }}
-      />
-
-      <button onClick={() => navigate('/pitch')}>
-        투구 페이지로 돌아가기
-      </button>
+    <div className="out-page">
+      <div 
+        className="background"
+        style={{ backgroundImage: `url(${homerun})`}}
+        ></div> {/* 흐림 효과 추가된 배경 */}
+      <img src={Homerun} alt="OUT text" className="out-text" />
     </div>
   );
-};
+}
 
 export default HomerunPage;
