@@ -110,8 +110,6 @@
     margin: 0 1rem;
   }
   
-
-    ====== 5x5 존 그리드 ======
     .zone-container {
         /* 절대 위치로, 부모 .pitching-main 기준 */
         position: absolute;
@@ -162,18 +160,22 @@
 
 /* 박스 스타일 */
 .batting-zone-box {
-  width: 25px;
-  height: 35px;
+  width: 30px;
+  height: 40px;
   display: flex;
-  background-color: rgba(255, 255, 255, 0.3);
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.6); /* 투명도를 낮춰 배경을 더 진하게 함 */
   border: 1px solid #fff;
   border-radius: 2px;
-  font-size: 9px;
-  font-weight: bold;
-  color: #333;
+  font-size: 12px;
+  color: #000000;
   cursor: pointer;
   transition: background-color 0.2s;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 텍스트 그림자로 대비 향상 */
 }
+
+
 
 .batting-zone-box:hover {
   background-color: rgba(200, 200, 200, 0.5);
@@ -296,4 +298,27 @@
 
 .bat-button:active {
   background-color: #1e7e34;
+}
+
+
+/* BattingPage.css 파일에 추가 */
+.intro-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.intro-popup {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0.8
 }
