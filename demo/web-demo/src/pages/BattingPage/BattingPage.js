@@ -23,6 +23,12 @@ function BattingPage() {
     0.260, 0.270, 0.200, 0.300, 0.250,
   ]);
 
+  const [showIntroPopup, setShowIntroPopup] = useState(true);
+  //페이지 진입 시 설명 팝업 관련
+  const handleIntroConfirm = () => {
+    setShowIntroPopup(false);
+  };
+
   const [clickedZone, setClickedZone] = useState(null); // 클릭된 버튼 상태 저장
   const [showPopup, setShowPopup] = useState(false); // 팝업 상태
   const [decision, setDecision] = useState(null); // "칠래" 또는 "안 칠래" 상태
@@ -260,6 +266,23 @@ function BattingPage() {
   
   return (
     <div className="batting-page-container">
+
+      {/* Intro*/}
+      {showIntroPopup && (
+        <div className="intro-popup-overlay">
+          <div className="intro-popup">
+            <p>플레이어가 타자가 되어 AI 투수를 상대로 공격을 시작합니다.</p>
+            <p>점수를 내 게임을 승리하세요!</p>
+               
+            <p>*중앙에는 AI 보조 장치가 투수의 구사율을 예측합니다.</p>
+            
+            <button onClick={handleIntroConfirm}
+            style={{ fontSize: '20px', padding: '7px 14px' }}>
+              확인</button>
+          </div>
+        </div>
+      )}
+
       {/* 상단 스코어보드 */}
       <div className="pitching-scoreboard">
         {/* 왼쪽 팀 점수 */}
