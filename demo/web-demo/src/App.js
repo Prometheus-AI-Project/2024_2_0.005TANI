@@ -8,6 +8,10 @@ import PitchingPage from './pages/PitchingPage/PitchingPage.js';
 import BattingPage from './pages/BattingPage/BattingPage.js';
 import EndingPage from './pages/EndingPage/EndingPage.js';
 
+import HomerunPage from './pages/ResultPage/HomerunPage.js';
+import OutPage from './pages/ResultPage/OutPage.js';
+
+
 function App() {
   return (
     <Router>
@@ -17,6 +21,8 @@ function App() {
         <Route path="/pitch" element={<PitchingPage />} />  
         <Route path="/bat" element={<BattingPage />} /> 
         <Route path="/end" element={<EndingPage />} />
+        <Route path="/homerun" element={<HomerunPage />} />
+        <Route path="/out" element={<OutPage />} />
       </Routes>
     </Router>
   );

@@ -153,6 +153,8 @@ function BattingPage() {
           }
           resetCount();
           setHitterOrder((prev) => prev + 1);
+
+          navigate('/homerun')
           break;
   
         case 'hit':
