@@ -308,15 +308,7 @@ function BattingPage() {
           </p>
         </div>
       )}
-      {/* 좌측 하단 선택 버튼 */}
-      <div className="decision-buttons">
-        <button onClick={() => handleDecision("I'll hit the ball")} className="decision-button">
-          I'll hit the ball
-        </button>
-        <button onClick={() => handleDecision("I won't hit the ball")} className="decision-button">
-         I won't hit the ball
-        </button>
-      </div>
+  
 
 
         {/* 중앙(투수/배터 박스 등) */}

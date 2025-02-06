@@ -6,6 +6,8 @@ import axios from 'axios';
 
 function PitchingPage() {
   const location = useLocation();
+
+  //'/setting'에서 입력한 정보 받아오기
   const { homeTeam, pitcherHeight, pitchHand, pitchForm, awayTeam } = location.state || {};
   
   // 점수 및 게임 상태 변수 관리
@@ -256,6 +258,8 @@ useEffect(() => {
 
 
   
+
+  //지금 생기는 이슈: 
   return (
     <div className="pitching-page">
       {/* 스코어보드 */}
@@ -290,10 +294,7 @@ useEffect(() => {
   
       {/* 메인 콘텐츠 */}
       <div className="pitching-main">
-        <div className="pitcher-info">
-          <p>투수 정보 띄우기?</p>
-        </div>
-  
+ 
         {/* 타율 표시 */}
         <div className="ai-assistant-wrapper">
           <h2>AI Predict Result</h2>
@@ -318,11 +319,7 @@ useEffect(() => {
             </div>
           ))}
         </div>
-  
-        <div className="batter-info">
-          <p>타자 정보 띄우기</p>
-        </div>
-  
+
         {/* 구종 선택 버튼 */}
         <div className="pitch-type-selector">
           <h3>구종 선택</h3>

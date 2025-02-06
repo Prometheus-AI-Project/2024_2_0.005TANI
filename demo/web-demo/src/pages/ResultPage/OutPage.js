@@ -18,7 +18,7 @@ function OutPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate(-1); // 이전 페이지로 돌아가기
-    }, 2000); // 2초 후 복귀
+    }, 4000); // 4초 후 복귀
 
     return () => clearTimeout(timer); // 언마운트 시 타이머 정리
   }, [navigate]);
