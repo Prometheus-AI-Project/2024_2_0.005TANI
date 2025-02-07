@@ -7,7 +7,7 @@ The dataset is crawled from statiz(https://statiz.sporki.com/player/) and KBO(ht
 
 Below are the examples of dataset
 
-### 1. preprocessed_hitmodel_data_ballcount_df_csv
+### 1. preprocessed_hitmodel_data_ballcount_df.csv
 
 ```
 preprocessed_hitmodel_data_ballcount_df:{height: 180, lp_or_rp: 'R', pitch_mechanic: 0.0, more_strike:1, more_ball: 0, same_strike_ball:0, zone1:1.8, zone2:1.5,}
