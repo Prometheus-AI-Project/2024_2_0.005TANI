@@ -4,7 +4,7 @@ import random
 
 teamname_convert ={ '기아 타이거즈' : 'KIA','삼성 라이온즈' : 'SAMSUNG', 'LG 트윈스' : 'LG', '두산 베어스' : 'DOOSAN','KT' : 'KT','SSG 랜더스' : 'SSG','롯데 자이언츠' : 'LOTTE', '한화 이글스' : 'HANWHA','NC 다이노스' : 'NC', '키움 히어로즈' : 'KIWOOM'}
 
-strike_zones = [7,8,9,12,13,14,15,17,18,19]
+strike_zones = [ 7,8,9,12,13,14,15,17,18, 19]
 
 def hitter_inform(team_inform, hitter_order):#팀, 타자의 타순 정보 입력 받아 타자 정보 리턴
     
@@ -35,20 +35,20 @@ def pitch_model_result(pitcher_model_top5, hit_percentage, player_pick):# 플레
     global strike_zones
     
     
-    foul_probability = 0.3
-    foul_to_out_probability =  0.2
+    foul_probability = 0.4
+    foul_to_out_probability =  0.3
     
     hit_strikes, hit_ball =  check_hitzone(player_pick)
     
     if player_pick in strike_zones:#플레이어 픽 == 스트라이크 존 
         if player_pick in pitcher_model_top5:# homerun 처리
-            result = check_probability(hit_percentage[player_pick-1]) #출루율 적용
+            result = check_probability(hit_percentage[player_pick-1], "pitcher") #출루율 적용
             if result:
                 return "homerun" 
             else:
-                is_foul = check_probability(foul_probability)
+                is_foul = check_probability(foul_probability, "pitcher")
                 if is_foul:
-                    is_foul_to_out = check_probability(foul_to_out_probability)
+                    is_foul_to_out = check_probability(foul_to_out_probability, "pitcher")
                     if is_foul_to_out:
                         return "out"
                     else:
@@ -62,13 +62,13 @@ def pitch_model_result(pitcher_model_top5, hit_percentage, player_pick):# 플레
             
             if len(hit_strike_zones)>0:#안타 처리, pitcher_model_top5 == 십자가 strike zone 
                 hit_strike_zones[0]
-                result = check_probability(hit_percentage[hit_strike_zones[0]-1]) #출루율 적용
+                result = check_probability(hit_percentage[hit_strike_zones[0]-1], "pitcher") #출루율 적용
                 if result:
                     return "hit" 
                 else:
-                    is_foul = check_probability(foul_probability)
+                    is_foul = check_probability(foul_probability, "pitcher")
                     if is_foul:
-                        is_foul_to_out = check_probability(foul_to_out_probability)
+                        is_foul_to_out = check_probability(foul_to_out_probability, "pitcher")
                         if is_foul_to_out:
                             return "out"
                         else:
@@ -87,13 +87,13 @@ def pitch_model_result(pitcher_model_top5, hit_percentage, player_pick):# 플레
             hit_strike_zones = list(set(pitcher_model_top5) & set(hit_strikes))
             hit_ball_zones = list(set(pitcher_model_top5) & set(hit_ball))
             if len(hit_strike_zones)>0:# ball 처리, pitcher_model_top5 == 십자가 strike zone 
-                result = check_probability(hit_percentage[hit_strike_zones[0]-1]) #출루율 적용
+                result = check_probability(hit_percentage[hit_strike_zones[0]-1], "pitcher") #출루율 적용
                 if result:
                     return "hit" 
                 else:
-                    is_foul = check_probability(foul_probability)
+                    is_foul = check_probability(foul_probability, "pitcher")
                     if is_foul:
-                        is_foul_to_out = check_probability(foul_to_out_probability)
+                        is_foul_to_out = check_probability(foul_to_out_probability, "pitcher")
                         if is_foul_to_out:
                             return "out"
                         else:
@@ -105,13 +105,17 @@ def pitch_model_result(pitcher_model_top5, hit_percentage, player_pick):# 플레
             
             
             
-def check_probability(probability):
+def check_probability(probability, player_position):
     """
     probability: 발생 확률 (0 ~ 1 사이의 값, 예: 0.347 -> 34.7%)
     return: True(성공), False(실패)
     """
     random_value = random.random()  # 0.0 ~ 1.0 사이 난수 생성
-    return random_value < probability #타율 조정
+    if player_position == "pitcher":
+        print("====================pitcher")
+        return random_value < probability*1.4
+    else:
+        return random_value < probability*1.2
 
 def check_hitzone(zone):#십자가 위치 -> 스트라이크, 볼 위치 판단
     
@@ -149,21 +153,34 @@ def bat_model_result(pitcher_model_top5, hit_percentage, player_pick):# 플레�
     
     global strike_zones
     
-    hit_strikes, hit_ball =  check_hitzone(pitcher_model_top5[0])#모델 예측 top1 부터 내림차순이라는 가정
+    hit_strikes_1, hit_ball =  check_hitzone(pitcher_model_top5[0])#모델 예측 top1 부터 내림차순이라는 가정
+    hit_strikes_2, hit_ball =  check_hitzone(pitcher_model_top5[1])
     
     if player_pick in strike_zones:#타자 휘두른 경우
         if player_pick in pitcher_model_top5:#정확히 일치하는 경우 -> homerun
-            result = check_probability(hit_percentage[player_pick-1]) #출루율 적용
+            result = check_probability(hit_percentage[player_pick-1], "batter") #출루율 적용
             if result:
                 return "homerun" 
             else:
                 return "foul"
-        elif player_pick in hit_strikes:#top 1 십자가, strike -> 안타타
-            result = check_probability(hit_percentage[pitcher_model_top5[0]-1]) #출루율 적용
+        elif player_pick in hit_strikes_1:#top 1 십자가, strike -> 안타
+            result = check_probability(hit_percentage[pitcher_model_top5[0]-1], "batter") #출루율 적용
             if result:
                 return "hit" 
             else:
-                return "foul"
+                if random.random() > 0.1:  # 20% 확률
+                    return "foul"
+                else:
+                    return "strike"
+        elif player_pick in hit_strikes_2:#top 1 십자가, strike -> 안타
+            result = check_probability(hit_percentage[pitcher_model_top5[1]-1], "batter") #출루율 적용
+            if result:
+                return "hit" 
+            else:
+                if random.random() > 0.1:  # 20% 확률
+                    return "foul"
+                else:
+                    return "strike"
         else:
             return "strike"
     else:#타자 안 휘두른 경우

@@ -205,6 +205,8 @@ def run_pitcher_model(input_dict, mode):
     preds = np.array(preds) 
     avg_pred = preds.mean(axis=0)
     
+    
+    
      
     if mode == "pitch_result":
         top_5_indices = np.argsort(avg_pred)[-5:][::-1]
@@ -411,7 +413,9 @@ def run_hitter_model(input_dict, mode):
         )
         
         preds.append(y_pred_4)
-
+        
+        
+        
         preds = np.array(preds) 
         avg_pred = preds.mean(axis=0) 
         
@@ -481,6 +485,8 @@ def run_hitter_model(input_dict, mode):
         )
         preds.append(y_pred_4)
 
+        
+        
         preds = np.array(preds) 
         avg_pred = preds.mean(axis=0) 
         return avg_pred

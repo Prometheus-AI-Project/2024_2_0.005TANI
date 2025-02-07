@@ -167,18 +167,10 @@ useEffect(() => {
         break;
 
       case 'out':
-        setOuts((prev) => {
-          const newOut = prev + 1;
-          setHitterOrder((prev) => prev + 1);
-          resetCount();
-
-          message = "아웃!";
-
-          return newOut;
-        });
-
-        //navigate('/out')
-  
+        message = "아웃!";
+        setOuts((prev) => prev + 1);
+        setHitterOrder((prev) => prev + 1);
+        resetCount();
         break;
 
       default:
@@ -204,7 +196,7 @@ useEffect(() => {
   useEffect(() => {
   if (outs >= 3) {
     console.log("Inning over. Switching sides.");
-    alert("수비가 끝났습니다. 9회말로 이동합니다");
+    alert("3아웃!! 수비가 끝났습니다. 9회말로 이동합니다");
     navigate('/bat', {
       state: {
         homeTeam,
@@ -299,7 +291,6 @@ useEffect(() => {
 
     try {
       const getResult  = await axios.post('http://localhost:8000/api/pitchAI', pitchAssistData);
-      
       setPitchAssistValue(getResult.data);
       
       
@@ -406,7 +397,8 @@ useEffect(() => {
  
         {/* 타율 표시 */}
         <div className="ai-assistant-wrapper">
-          <h2>AI Predict Result</h2>
+          <h2>AI Predict </h2>
+          <h4>(타자 구역별 타율) </h4>
           <div className="batting-average-container">
             {pitchAssistValue.map((average, index) => (
               <div key={index} className={getBoxClass(average)}>
@@ -415,7 +407,13 @@ useEffect(() => {
             ))}
           </div>
         </div>
-  
+        
+        {/* 코맨트 */}
+        <div className="game-comment-wrapper">
+          <h4 > *투수는 사람이므로 투구는 선택 위치에서 상하좌우 한 칸씩 벗어날 수 있습니다.</h4>
+          <h4 > *좌측의 정보를 통해 AI 타자의 타율을 참고해서 투구해보세요.</h4>
+        </div>
+
         {/* 투수가 던질 존(Zone) 선택 */}
         <div className="pitcher-zone-container">
           {zones.map((zoneIndex) => (

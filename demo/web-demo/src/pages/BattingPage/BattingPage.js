@@ -291,7 +291,7 @@ function BattingPage() {
   useEffect(() => {
     if (outs >= 3) {
       console.log("Inning over. Game Finished");
-      alert("게임이 종료되었습니다.");
+      alert("3아웃!! 게임이 종료되었습니다.");
       navigate('/end', {
         state: {
           homeTeam,
@@ -392,6 +392,11 @@ function BattingPage() {
               </div>
           </div>
       </div>
+      
+      {/* 코맨트 */}
+        <div className="game-comment-wrapper">
+          <h4 > *중앙의 정보는 AI가 예측한 상대 투수의 구사율(던질 확률)입니다.</h4>
+        </div>
 
         {/* 통합된 5x5 그리드 */}
       <div className="zone-container integrated-grid">

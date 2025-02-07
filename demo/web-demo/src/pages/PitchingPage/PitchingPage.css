@@ -244,14 +244,27 @@
       flex-direction: column;          /* 수직으로 쌓음 */
       justify-content: center;         /* 수직 중앙 정렬 */
       align-items: center;             /* 수평 중앙 정렬 */
+      border-radius: 8px;
     }
 
     .ai-assistant-wrapper h2 {
       margin: 0;                       /* 기본 h2 margin 제거 */
-      margin-bottom: 10px;             /* 컨테이너와 약간의 간격 추가 */
+      margin-bottom: 0px;             /* 컨테이너와 약간의 간격 추가 */
       text-align: center;
     }
     
+    .game-comment-wrapper{
+      background-color: rgba(255, 255, 255, 0.7);
+      position: absolute;
+      top: 10px;   /* 원하는 만큼의 여백을 지정 */
+      right: 10px; /* 원하는 만큼의 여백을 지정 */
+      border-radius: 13px;
+      width: 300px;      /* 너비를 줄임 */
+      padding: 5px;      /* 내부 여백을 줄임 */
+      font-size: 15px;   /* 글씨 크기를 줄임 */
+    }
+
+
     /* 그리드 컨테이너: 5×5 배치 */
     .batting-average-container {
       display: grid;
