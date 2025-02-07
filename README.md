@@ -3,14 +3,14 @@
 
 
 ## 0. Dataset Overview
-The dataset is crawled from Musinsa, focusing on categories like hoodies, coats, and jeans. Using the crawled data, we generated descriptive captions with GPT-40 Mini.
+The dataset is crawled from statiz(https://statiz.sporki.com/player/) and KBO(https://www.koreabaseball.com/Record/Player/HitterBasic/Situation.aspx), focusing on categories like pitch mechanics and zones. 
 
-The dataset is structured in the format (snapshot, product image, descriptive caption) to align with the FashionIQ dataset, which is commonly used for model training in fashion-related tasks.
+Below are the examples of dataset
 
-Dataset has the following structure:
+### 1. dataset 이름
 
 ```
-
+pitch data:{"isbn": "0151686564", "text_reviews_count": "626", "series": [] }
 ```
 
 
@@ -87,6 +87,6 @@ Our implementation and development is based on [https://github.com/chunmeifeng/S
 
 
 ## 8. Members
-김재영 Dataset preprocessing/augmentation, Model training, Model building
-문재원 Dataset preprocessing, Model Training, Web Setting
-이민석 Dataset preprocessing, Model Training, Web Setting
+김재영 Dataset preprocessing/augmentation, Model training, Model building<br>
+문재원 Dataset preprocessing, Model Training, Web Setting<br>
+이민석 Dataset preprocessing, Model Training, Web Setting<br>
