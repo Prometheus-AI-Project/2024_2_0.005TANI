@@ -1,4 +1,4 @@
-(판넬 사진)
+
 ![0 005](https://github.com/user-attachments/assets/3cc590ee-6697-424e-b9fc-e20959e8163c)
 
 
