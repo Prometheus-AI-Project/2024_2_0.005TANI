@@ -12,6 +12,10 @@ function PitchingPage() {
   
   const [showIntroPopup, setShowIntroPopup] = useState(true);
 
+  const [eventPopupVisible, setEventPopupVisible] = useState(false);
+  const [eventPopupMessage, setEventPopupMessage] = useState('');
+  const [eventPopupImage, setEventPopupImage] = useState(null);
+
   const handleIntroConfirm = () => {
     setShowIntroPopup(false);
   };
@@ -52,13 +56,31 @@ function PitchingPage() {
 
   const [pitchResult, setPitchResult] = useState(null);
 
+
 useEffect(() => {
+    if (eventPopupVisible) {
+      const timer = setTimeout(() => {
+        setEventPopupVisible(false);
+      }, 4000);
+
+      // cleanup: 해당 effect 재실행 시 이전 타이머를 정리
+      return () => clearTimeout(timer);
+    }
+  }, [eventPopupVisible]);
+
+useEffect(() => {
+
   // pitchResult가 null이면 로직 실행 안 함
   if (pitchResult === null) return;
-  alert(pitchResult)
+  //alert(pitchResult)
   const handlePitchResult = () => {
+
+    let message = '';
+
     switch (pitchResult) {
       case 'homerun':
+
+
         if (runners > 0) {
           setAwayScore((prev) => prev + runners + 1);
           setRunners(0);
@@ -68,7 +90,8 @@ useEffect(() => {
         resetCount();
         setHitterOrder((prev) => prev + 1);
 
-        //navigate('/homerun')
+        message="홈런!";
+
         break;
 
       case 'hit':
@@ -83,7 +106,8 @@ useEffect(() => {
         setHitterOrder((prev) => prev + 1);
         resetCount();
 
-        //navigate('/hit')
+        message = "안타!";
+
         break;
 
       case 'foul':
@@ -91,27 +115,40 @@ useEffect(() => {
           setStrikes((prev) => prev + 1);
         }
 
-        //navigate('/foul')
+        message = "파울!";
+
         break;
 
       case 'strike':
+        let tempMsg="스트라이크!";
+
         setStrikes((prev) => {
           const newStrike = prev + 1;
+
           if (newStrike >= 3) {
+
+            tempMsg = "3스트라이크로 인해 아웃됩니다!";
+
             setOuts((prevOut) => prevOut + 1);
             setHitterOrder((prev) => prev + 1);
             resetCount();
-          }
+
+          } 
           return newStrike;
         });
 
-        //navigate('/strike')
+        message = tempMsg;
+
         break;
 
       case 'ball':
+
+        let temMsg = "볼!";
         setBalls((prev) => {
           const newBall = prev + 1;
+
           if (newBall >= 4) {
+
             if (runners === 3){
               setAwayScore((prev) => prev + 1);
               setRunners(0);
@@ -121,11 +158,12 @@ useEffect(() => {
             }
             setHitterOrder((prev) => prev + 1);
             resetCount();
-          }
+            temMsg = "볼넷!";
+          } 
           return newBall;
         });
 
-        //navigate('/ball')
+        message = temMsg;
         break;
 
       case 'out':
@@ -133,14 +171,22 @@ useEffect(() => {
           const newOut = prev + 1;
           setHitterOrder((prev) => prev + 1);
           resetCount();
+
+          message = "아웃!";
+
           return newOut;
         });
 
         //navigate('/out')
+  
         break;
 
       default:
         break;
+    }
+    if (message) {
+      setEventPopupMessage(message);
+      setEventPopupVisible(true); // 여기서 팝업을 띄운다!
     }
 
     
@@ -224,7 +270,7 @@ useEffect(() => {
 
     try {
       const getResult  = await axios.post('http://localhost:8000/api/pitch', pitchData);
-      
+      console.log('[DEBUG] pitchResult from server:', getResult.data);
       setPitchResult(getResult.data);
 
 
@@ -408,6 +454,30 @@ useEffect(() => {
           </button>
         </div>
       </div>
+           {/* 이벤트 팝업 (4초 뒤에 자동으로 사라짐) */}
+      {eventPopupVisible && (
+        <div className="event-popup-overlay">
+          <div className="event-popup">
+            {/* 이미지가 있으면 표시 */}
+            {eventPopupImage && (
+              <img
+                src={eventPopupImage}
+                alt="이벤트 이미지"
+                className="event-popup-image"
+              />
+            )}
+            {/* 메시지 표시 */}
+            <p className="event-popup-message">{eventPopupMessage}</p>
+            {/* 닫기 버튼(원한다면 수동으로도 닫을 수 있도록) */}
+            <button
+              className="event-popup-close-button"
+              onClick={() => setEventPopupVisible(false)}
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
   
