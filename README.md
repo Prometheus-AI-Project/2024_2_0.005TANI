@@ -81,12 +81,21 @@ python src/blip_validate.py \
 
 ## 5. Web page 
 ```
+*Start Both Terminal!
+
 #Terminal 1
+(cd demo/web-demo)
 npm start
 
   
 #Terminal 2
-uvicorn main:app --reload 
+(cd demo/backend)
+
+uvicorn main:app --reload
+
+or
+
+python main.py
 ```
 
 ## 6. Checkpoints
