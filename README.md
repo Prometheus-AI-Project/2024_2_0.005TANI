@@ -40,7 +40,7 @@ For training and inference, simply run each of the specified files listed below.
 - Inference: (파일명)
 
 
-## 5. Web page 
+## 4. Web page 
 ```
 *Start Both Terminal!
 
@@ -56,12 +56,12 @@ npm start
 uvicorn main:app --reload ( or python main.py )
 ```
 
-## 6. Checkpoints
+## 5. Checkpoints
 Google drive:
 
 
 
-## 7. Members
+## 6. Members
 김재영 Dataset preprocessing/augmentation, Model training, Model building<br>
 문재원 Dataset preprocessing, Model Training, Web Setting<br>
 이민석 Dataset preprocessing, Model Training, Web Setting<br>
