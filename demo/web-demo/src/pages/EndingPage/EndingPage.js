@@ -14,7 +14,7 @@ function Ending() {
   // 승패 메시지 설정
   let resultMessage;
   if (isDraw) {
-    resultMessage = `무승부입니다! ${homeTeam} vs ${awayTeam} 점수: ${homeScore} : ${awayScore}`;
+    resultMessage = `무승부입니다!`;
   } else if (isHomeTeamWinner) {
     resultMessage = `축하합니다! ${homeTeam}이(가) 승리하였습니다!`;
   } else {

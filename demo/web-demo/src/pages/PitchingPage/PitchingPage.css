@@ -12,43 +12,116 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    }
+    /* 전체 점수판 컨테이너: 왼쪽 상단에 배치 */
+  /* 전체 점수판 컨테이너: 왼쪽 상단에 배치 */
+ /* 전체 점수판 컨테이너를 flex row로 설정하여 좌우로 배치 */
+  .pitching-scoreboard {
+    background-color: rgba(43, 42, 42, 0.531);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    border-radius: 4px;
+    flex-direction: row; /* 좌우 배치 */
+    align-items: flex-start;
+    gap: 10px; /* 좌우 요소 간 간격 */
+    z-index: 1000;
+    padding: 5px;
+  }
+
+  /* 좌측 점수 및 이닝 정보 영역 (흰색 배경) */
+  .left-side {
+    background-color: rgba(255, 255, 255, 0.8); /* 흰색 배경에 약간의 투명도 */
+    color: #000; /* 배경이 밝으므로 텍스트는 어둡게 */
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-self: center;
+  }
+
+  /* 점수 정보 */
+  .score-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+  }
+  .score-container .team.home {
+    font-weight: 900;
+  }
+  .score-container .teamInfo {
+    font-weight: 500;
+    font-size: 12px;
+    color: rgb(0, 0, 0);
   }
   
-  /* 상단 스코어보드 */
-  .pitching-scoreboard {
-    width: 100%;
-    height: 60px; /* 높이를 약간 늘림 */
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    display: flex;
-    justify-content: space-between; /* 좌, 우 끝에 요소 배치 */
-    align-items: center;
-    padding: 0 20px; /* 양쪽 여백 */
-    box-sizing: border-box;
-    position: relative; /* 자식 요소 정렬을 위해 설정 */
+  .score-container .team.away {
+    font-weight: 900;
   }
-  .score-team.left {
+  .score-container .score {
+    font-size: 18px;
+    font-weight: 900; /* 숫자 값으로 두께 설정 */
+  }
+  .team-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 이닝 정보 */
+  .inning-info {
+    font-size: 14px;
     text-align: left;
   }
-  
-  .score-team.right {
-    text-align: right;
+
+  /* 오른쪽 카운트 영역: 세로로 쌓기 */
+  .count-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    /* 필요에 따라 padding이나 margin 추가 */
   }
-  
-  .score-team {
-    flex: 1; /* 양쪽 요소가 일정한 너비를 가지도록 설정 */
+
+  /* 각 카운트 그룹 (Ball, Strike, Out) */
+  .count-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .score-inning {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 가운데 정렬 */
-    background-color: rgba(235, 216, 216, 0.308); /* 살짝 반투명 배경 */
-    padding: 5px 10px;
-    border-radius: 8px;
-    text-align: center;
+  .count-label {
+    color : #fffefe;
+    font-size: 12px;
+    margin-bottom: 1px;
   }
+
+  /* 원들을 가로로 배치 */
+  .circle-container {
+    display: flex;
+    gap: 3px;
+  }
+
+  /* 원 기본 스타일 */
+  .circle {
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid #fff;
+    border-radius: 50%;
+  }
+
+  /* 채워진 원 */
+  .circle.ballfilled {
+    background-color: #54c250;
+  }
+  .circle.strikefilled {
+    background-color: #e0771c;
+  }
+  .circle.outfilled {
+    background-color: #f00505;
+  }
+
   
   
 
@@ -68,7 +141,7 @@
   .base {
     width: 16px;
     height: 16px;
-    background-color: rgb(243, 243, 242);
+    background-color: rgb(180, 180, 180);
     position: absolute;
     transform: rotate(45deg);
   }

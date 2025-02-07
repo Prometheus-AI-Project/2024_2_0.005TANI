@@ -1,0 +1,27 @@
+.out-page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/img/background/batter.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(4px) brightness(70%); /* 흐림(blur) + 밝기 낮춤 */
+    z-index: -1; /* 다른 요소 위로 올라오지 않도록 */
+  }
+  
+  .out-text {
+    width: 50vw; /* OUT 이미지 크기 조절 */
+    max-width: 200px; /* 최대 크기 제한 */
+  }
+  

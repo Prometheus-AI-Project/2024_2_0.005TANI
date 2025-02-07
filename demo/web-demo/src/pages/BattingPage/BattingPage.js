@@ -23,6 +23,12 @@ function BattingPage() {
     0.260, 0.270, 0.200, 0.300, 0.250,
   ]);
 
+  const [showIntroPopup, setShowIntroPopup] = useState(true);
+  //페이지 진입 시 설명 팝업 관련
+  const handleIntroConfirm = () => {
+    setShowIntroPopup(false);
+  };
+
   const [clickedZone, setClickedZone] = useState(null); // 클릭된 버튼 상태 저장
   const [showPopup, setShowPopup] = useState(false); // 팝업 상태
   const [decision, setDecision] = useState(null); // "칠래" 또는 "안 칠래" 상태
@@ -80,7 +86,7 @@ function BattingPage() {
   
     // 공통으로 사용할 데이터 객체 생성
     const batData = {
-      zone: clickedZone !== null ? clickedZone : 0, // 기본값 0
+      zone: clickedZone !== null ? clickedZone+1 : 0, // 기본값 0
       awayTeam: awayTeam || "NC",
       homeTeam: homeTeam || "SSG",
       hitterOrder: hitterOrder || 1,
@@ -153,6 +159,8 @@ function BattingPage() {
           }
           resetCount();
           setHitterOrder((prev) => prev + 1);
+
+          //'/homerun')
           break;
   
         case 'hit':
@@ -166,12 +174,15 @@ function BattingPage() {
           });
           setHitterOrder((prev) => prev + 1);
           resetCount();
+
+          //navigate('/hit')
           break;
   
         case 'foul':
           if (strikes < 2) {
             setStrikes((prev) => prev + 1);
           }
+          //navigate('/foul')
           break;
   
         case 'strike':
@@ -182,20 +193,30 @@ function BattingPage() {
               setHitterOrder((prev) => prev + 1);
               resetCount();
             }
+
             return newStrike;
           });
+          //navigate('/homerun')
           break;
   
         case 'ball':
           setBalls((prev) => {
             const newBall = prev + 1;
             if (newBall >= 4) {
-              setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
+              if (runners === 3){
+                setAwayScore((prev) => prev + 1);
+                setRunners(0);
+              }
+              else{
+                setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
+              }
               setHitterOrder((prev) => prev + 1);
               resetCount();
             }
             return newBall;
           });
+          
+          //navigate('/ball')
           break;
   
         case 'out':
@@ -205,6 +226,7 @@ function BattingPage() {
             resetCount();
             return newOut;
           });
+          //navigate('/out')
           break;
   
         default:
@@ -250,32 +272,84 @@ function BattingPage() {
   
   return (
     <div className="batting-page-container">
-      {/* 상단 스코어보드 */}
-      <div className="pitching-scoreboard">
-        {/* 왼쪽 팀 점수 */}
-        <div className="score-team left">
-          {homeTeam}   {homeScore}
-        </div>
 
-        {/* 이닝, 볼카운트, 아웃 정보 */}
-        <div className="score-inning">
-          {inning}  {outs} 아웃 {strikes} 스트라이크 {balls} 볼
-        </div>
-
-        {/* 다이아몬드 (가운데) */}
-        <div className="baseball-diamond-container">
-          <div className="baseball-diamond">
-            <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
-            <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
-            <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
-                        
+      {/* Intro*/}
+      {showIntroPopup && (
+        <div className="intro-popup-overlay">
+          <div className="intro-popup">
+            <p>플레이어가 타자가 되어 AI 투수를 상대로 공격을 시작합니다.</p>
+            <p>점수를 내 게임을 승리하세요!</p>
+               
+            <p>*중앙에는 AI 보조 장치가 투수의 구사율을 예측합니다.</p>
+            
+            <button onClick={handleIntroConfirm}
+            style={{ fontSize: '20px', padding: '7px 14px' }}>
+              확인</button>
           </div>
         </div>
-  
-        {/* 오른쪽 팀 점수 */}
-        <div className="score-team right">
-          {awayScore}   {awayTeam} 
+      )}
+
+      {/* 상단 스코어보드 */}
+      <div className="pitching-scoreboard">
+        {/* 왼쪽: 점수와 이닝 정보를 담은 컨테이너 (흰색 배경) */}
+        <div className="left-side">
+          <div className="score-container">
+              <div className="team-wrapper">
+                <span className="team home">{homeTeam}</span>
+                <span className="teamInfo">(플레이어 팀)</span>
+              </div>
+              <span className="score home">{homeScore}</span>
+              <span className="score away">{awayScore}</span>
+              <div className="team-wrapper">
+                <span className="team away">{awayTeam}</span>
+                <span className="teamInfo">(AI 팀)</span>
+              </div>
+            </div>
+          <div className="inning-info">
+            {inning}
+          </div>
         </div>
+        
+        {/* 오른쪽: 세로로 쌓인 볼/스트라이크/아웃 카운트 */}
+        <div className="count-container">
+          {/* Ball 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Ball</div>
+            <div className="circle-container">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className={`circle ${i < balls ? "ballfilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          {/* Strike 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Strike</div>
+            <div className="circle-container">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className={`circle ${i < strikes ? "strikefilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          {/* Out 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Out</div>
+            <div className="circle-container">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className={`circle ${i < outs ? "outfilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          
+        </div>
+        {/* 다이아몬드 (가운데) */}
+        <div className="baseball-diamond-container">
+              <div className="baseball-diamond">
+                <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
+                <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
+                <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
+                            
+              </div>
+          </div>
       </div>
 
         {/* 통합된 5x5 그리드 */}
@@ -298,15 +372,7 @@ function BattingPage() {
           </p>
         </div>
       )}
-      {/* 좌측 하단 선택 버튼 */}
-      <div className="decision-buttons">
-        <button onClick={() => handleDecision("I'll hit the ball")} className="decision-button">
-          I'll hit the ball
-        </button>
-        <button onClick={() => handleDecision("I won't hit the ball")} className="decision-button">
-         I won't hit the ball
-        </button>
-      </div>
+  
 
 
         {/* 중앙(투수/배터 박스 등) */}
@@ -346,24 +412,10 @@ function BattingPage() {
         </button>
       </div>
 
-      
-      {/* 하단 타격 정보 예시 */}
-      <div className="batting-info-bottom">
-        <div className="info-item">
-          <strong>타율</strong> 0.000
-        </div>
-        <div className="info-item">
-          <strong>홈런</strong> 0
-        </div>
-        <div className="info-item">
-          <strong>타점</strong> 0
-        </div>
-        <div className="info-item">
-          <strong>출루율</strong> 0.000
-        </div>
-      </div>
     </div>
   );
 }
+
+
 
 export default BattingPage;

@@ -8,6 +8,17 @@ import PitchingPage from './pages/PitchingPage/PitchingPage.js';
 import BattingPage from './pages/BattingPage/BattingPage.js';
 import EndingPage from './pages/EndingPage/EndingPage.js';
 
+import HomerunPage from './pages/ResultPage/HomerunPage.js';
+import HitPage from './pages/ResultPage/HitPage.js';
+import FoulPage from './pages/ResultPage/FoulPage.js';
+import StrikePage from './pages/ResultPage/StrikePage.js';
+import BallPage from './pages/ResultPage/BallPage.js';
+import OutPage from './pages/ResultPage/OutPage.js';
+
+
+
+
+
 function App() {
   return (
     <Router>
@@ -17,6 +28,14 @@ function App() {
         <Route path="/pitch" element={<PitchingPage />} />  
         <Route path="/bat" element={<BattingPage />} /> 
         <Route path="/end" element={<EndingPage />} />
+        <Route path="/homerun" element={<HomerunPage />} />
+        <Route path="/foul" element={<FoulPage />} />
+        <Route path="/strike" element={<StrikePage />} />
+        <Route path="/ball" element={<BallPage />} />
+        <Route path="/out" element={<OutPage />} />
+        <Route path="/hit" element={<HitPage />} />
+
+
       </Routes>
     </Router>
   );

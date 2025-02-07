@@ -6,8 +6,16 @@ import axios from 'axios';
 
 function PitchingPage() {
   const location = useLocation();
+
+  //'/setting'에서 입력한 정보 받아오기
   const { homeTeam, pitcherHeight, pitchHand, pitchForm, awayTeam } = location.state || {};
   
+  const [showIntroPopup, setShowIntroPopup] = useState(true);
+
+  const handleIntroConfirm = () => {
+    setShowIntroPopup(false);
+  };
+
   // 점수 및 게임 상태 변수 관리
   const [homeScore, setHomeScore] = useState(7);
   const [awayScore, setAwayScore] = useState(7);
@@ -59,6 +67,8 @@ useEffect(() => {
         }
         resetCount();
         setHitterOrder((prev) => prev + 1);
+
+        //navigate('/homerun')
         break;
 
       case 'hit':
@@ -72,12 +82,16 @@ useEffect(() => {
         });
         setHitterOrder((prev) => prev + 1);
         resetCount();
+
+        //navigate('/hit')
         break;
 
       case 'foul':
         if (strikes < 2) {
           setStrikes((prev) => prev + 1);
         }
+
+        //navigate('/foul')
         break;
 
       case 'strike':
@@ -90,18 +104,28 @@ useEffect(() => {
           }
           return newStrike;
         });
+
+        //navigate('/strike')
         break;
 
       case 'ball':
         setBalls((prev) => {
           const newBall = prev + 1;
           if (newBall >= 4) {
-            setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
+            if (runners === 3){
+              setAwayScore((prev) => prev + 1);
+              setRunners(0);
+            }
+            else{
+              setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
+            }
             setHitterOrder((prev) => prev + 1);
             resetCount();
           }
           return newBall;
         });
+
+        //navigate('/ball')
         break;
 
       case 'out':
@@ -111,6 +135,8 @@ useEffect(() => {
           resetCount();
           return newOut;
         });
+
+        //navigate('/out')
         break;
 
       default:
@@ -163,7 +189,7 @@ useEffect(() => {
     return "assist-box"; // 기본 클래스
   };
 
-  const pitchTypes = ["직구", "슬라이더", "커브", "체인지업", "스플리터", "포크볼"];
+  const pitchTypes = ["투심", "포심", "커터", "커브","슬라이더","체인지업", "포크볼"];
 
   const handlePitchSelect = (pitch) => {
     setSelectedPitch(pitch);
@@ -187,21 +213,24 @@ useEffect(() => {
       pitchForm: pitchForm || "오버핸드", // 기본값 설정
       pitchType: selectedPitch || "직구",
       pitcherHeight: pitcherHeight || 185,
-      zone: selectedZone !== null ? selectedZone : 1, // 기본값 0
+      zone: selectedZone !== null ? selectedZone+1 : 1, 
       awayTeam: awayTeam || "NC",
       hitterOrder: hitterOrder || 1,
       outs: outs || 0,
       strikes: strikes || 0,
       balls: balls || 0,
-      runners: runners || 1, // 기본값 빈 배열
+      runners: runners || 0,
     };
 
     try {
       const getResult  = await axios.post('http://localhost:8000/api/pitch', pitchData);
       
       setPitchResult(getResult.data);
-      setAIassistant(false);//경기 상황 변동 반영하여 새로운 AI 보조값 생성
-      
+
+
+      await getAIAssistant();
+      // 필요하다면 AIassistant 상태 업데이트 (예: true로 전환)
+      setAIassistant(true);
     } catch (error) {
       console.error("Error sending pitch data:", error);
       alert("투구 정보 전송 중 오류가 발생했습니다.");
@@ -244,44 +273,91 @@ useEffect(() => {
 
 
   
+
+  //지금 생기는 이슈: 
   return (
     <div className="pitching-page">
-      {/* 스코어보드 */}
+      {/* Intro */}
+    {showIntroPopup && (
+            <div className="intro-popup-overlay">
+              <div className="intro-popup">
+                <p>먼저 플레이어가 투수가 되어 AI 타자를 상대로 수비를 시작합니다.</p>
+                  
+
+                <p>*좌측의 AI 보조 장치가 예측한 타자의 출루율 참고해 투구를 진행하세요.</p>
+                
+                <button onClick={handleIntroConfirm}
+                style={{ fontSize: '20px', padding: '7px 14px' }}>
+                  확인</button>
+              </div>
+            </div>
+          )}
+
       <div className="pitching-scoreboard">
-        {/* 왼쪽 팀 점수 */}
-        <div className="score-team left">
-          {homeTeam}   {homeScore}
-        </div>
-
-        {/* 이닝, 볼카운트, 아웃 정보 */}
-        <div className="score-inning">
-          {inning}  {outs} 아웃 {strikes} 스트라이크 {balls} 볼
-        </div>
-
-        {/* 다이아몬드 (가운데) */}
-        <div className="baseball-diamond-container">
-          <div className="baseball-diamond">
-            <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
-            <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
-            <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
-                        
+        {/* 왼쪽: 점수와 이닝 정보를 담은 컨테이너 (흰색 배경) */}
+        <div className="left-side">
+          <div className="score-container">
+            <div className="team-wrapper">
+              <span className="team home">{homeTeam}</span>
+              <span className="teamInfo">(플레이어 팀)</span>
+            </div>
+            <span className="score home">{homeScore}</span>
+            <span className="score away">{awayScore}</span>
+            <div className="team-wrapper">
+              <span className="team away">{awayTeam}</span>
+              <span className="teamInfo">(AI 팀)</span>
+            </div>
+          </div>
+          <div className="inning-info">
+            {inning}
           </div>
         </div>
-  
-        {/* 오른쪽 팀 점수 */}
-        <div className="score-team right">
-          {awayScore}   {awayTeam} 
+        
+        {/* 오른쪽: 세로로 쌓인 볼/스트라이크/아웃 카운트 */}
+        <div className="count-container">
+          {/* Ball 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Ball</div>
+            <div className="circle-container">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className={`circle ${i < balls ? "ballfilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          {/* Strike 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Strike</div>
+            <div className="circle-container">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className={`circle ${i < strikes ? "strikefilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          {/* Out 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Out</div>
+            <div className="circle-container">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className={`circle ${i < outs ? "outfilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          
         </div>
+        {/* 다이아몬드 (가운데) */}
+        <div className="baseball-diamond-container">
+              <div className="baseball-diamond">
+                <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
+                <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
+                <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
+                            
+              </div>
+          </div>
       </div>
-  
-      
-  
+
       {/* 메인 콘텐츠 */}
       <div className="pitching-main">
-        <div className="pitcher-info">
-          <p>투수 정보 띄우기?</p>
-        </div>
-  
+ 
         {/* 타율 표시 */}
         <div className="ai-assistant-wrapper">
           <h2>AI Predict Result</h2>
@@ -306,11 +382,7 @@ useEffect(() => {
             </div>
           ))}
         </div>
-  
-        <div className="batter-info">
-          <p>타자 정보 띄우기</p>
-        </div>
-  
+
         {/* 구종 선택 버튼 */}
         <div className="pitch-type-selector">
           <h3>구종 선택</h3>

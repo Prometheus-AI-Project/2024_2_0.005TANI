@@ -111,7 +111,6 @@
   }
   
 
-    ====== 5x5 존 그리드 ======
     .zone-container {
         /* 절대 위치로, 부모 .pitching-main 기준 */
         position: absolute;
@@ -296,4 +295,27 @@
 
 .bat-button:active {
   background-color: #1e7e34;
+}
+
+
+/* BattingPage.css 파일에 추가 */
+.intro-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.intro-popup {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0.8
 }

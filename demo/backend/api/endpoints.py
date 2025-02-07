@@ -131,7 +131,6 @@ async def process_bat(data: BatData):
         lh_or_rh, hitter_height = hitter_inform(data.homeTeam, data.hitterOrder)#현재 본인 팀 타자 정보(좌/우타, 키) 가져옴
         
         lp_or_rp, pitcher_height = pitcher_inform(data.awayTeam)
-        
         #이 부분에서 모델 수행하고 결과 받아옴. ( pitch_result 종류 : hit, strike, ball, foul, out )
         bat_result = hitter_model(data.zone, hitter_height, lh_or_rh, pitcher_height,  lp_or_rp, data.strikes, data.balls, data.runners )#투구 종류도 인자로 들어가야 함.(투구 종류)
         #pitch_result 종류 : hit, strike, ball, foul, out
@@ -153,6 +152,8 @@ async def process_batai(data: BatAssistData):
         
         lp_or_rp, pitcher_height = pitcher_inform(data.awayTeam)
         
+        print("===========batAI===========")
+        print(lh_or_rh, pitcher_height,  lp_or_rp, data.strikes, data.balls, data.runners )
         pitch_probability_result = hitter_assistmodel(lh_or_rh, pitcher_height,  lp_or_rp, data.strikes, data.balls, data.runners )#투구 종류도 인자로 들어가야 함.(투구 종류)
 
     
