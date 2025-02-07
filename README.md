@@ -13,7 +13,7 @@ Below are the examples of dataset
 pitch data:{"isbn": "0151686564", "text_reviews_count": "626", "series": [] }
 ```
 
-### 2. dataset 이름름
+### 2. dataset 이름
 
 ## 2. Environment Setup
 For venv users
