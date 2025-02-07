@@ -46,16 +46,16 @@ project_base_path
 ## 2. Environment Setup
 For venv users
 ```
-python3.11 -m venv .MIXXX
-source .MIXXX/bin/activate
+python3.11 -m venv .ohtani
+source .ohtaniX/bin/activate
 pip3 install numpy==1.26.4 pandas==2.2.2 tensorflow==2.18.0 keras==3.8.0 scikit-learn==1.6.1
 pip3 install fastapi uvicorn
 ```
 
 For conda users
 ```
-conda create -n MIXXX python==3.11
-conda activate MIXXX
+conda create -n ohtani python==3.11
+conda activate ohtani
 pip3 install numpy==1.26.4 pandas==2.2.2 tensorflow==2.18.0 keras==3.8.0 scikit-learn==1.6.1
 pip3 install fastapi uvicorn 
 ```
