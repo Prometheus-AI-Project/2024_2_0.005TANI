@@ -47,7 +47,7 @@ project_base_path
 For venv users
 ```
 python3.11 -m venv .ohtani
-source .ohtaniX/bin/activate
+source .ohtani/bin/activate
 pip3 install numpy==1.26.4 pandas==2.2.2 tensorflow==2.18.0 keras==3.8.0 scikit-learn==1.6.1
 pip3 install fastapi uvicorn
 ```
