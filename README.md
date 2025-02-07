@@ -39,9 +39,15 @@ pip3 install fastapi uvicorn
 ## 3. Training & Inference 
 
 For training and inference, simply run each of the specified files listed below.
-- Training: (파일명)
+You must change file directory in train.py, inference.py to your file path.
+- Training:
+```
+python model/train.py
+```
 - Inference: (파일명)
-
+```
+python model/inference.py
+```
 
 ## 4. Web page 
 ```
