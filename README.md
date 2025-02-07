@@ -91,11 +91,7 @@ npm start
 #Terminal 2
 (cd demo/backend)
 
-uvicorn main:app --reload
-
-or
-
-python main.py
+uvicorn main:app --reload ( or python main.py )
 ```
 
 ## 6. Checkpoints
