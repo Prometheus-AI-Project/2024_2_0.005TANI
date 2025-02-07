@@ -10,25 +10,7 @@ The dataset is structured in the format (snapshot, product image, descriptive ca
 Dataset has the following structure:
 
 ```
-project_base_path
-└───  fashionIQ_dataset
-      └─── captions
-            | cap.dress.test.json
-            | cap.dress.train.json
-            | cap.dress.val.json
-            | ...
-            
-      └───  images
-            | B00006M009.jpg
-            | B00006M00B.jpg
-            | B00006M6IH.jpg
-            | ...
-            
-      └─── image_splits
-            | split.dress.test.json
-            | split.dress.train.json
-            | split.dress.val.json
-            | ...
+
 ```
 
 
@@ -105,3 +87,6 @@ Our implementation and development is based on [https://github.com/chunmeifeng/S
 
 
 ## 8. Members
+김재영 Dataset preprocessing/augmentation, Model training, Model building
+문재원 Dataset preprocessing, Model Training, Web Setting
+이민석 Dataset preprocessing, Model Training, Web Setting
