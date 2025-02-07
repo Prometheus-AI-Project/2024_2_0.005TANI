@@ -7,13 +7,17 @@ The dataset is crawled from statiz(https://statiz.sporki.com/player/) and KBO(ht
 
 Below are the examples of dataset
 
-### 1. dataset 이름
+### 1. preprocessed_hitmodel_data_ballcount_df_csv
 
 ```
-pitch data:{"isbn": "0151686564", "text_reviews_count": "626", "series": [] }
+preprocessed_hitmodel_data_ballcount_df:{height: 180, lp_or_rp: 'R', pitch_mechanic: 0.0, more_strike:1, more_ball: 0, same_strike_ball:0, zone1:1.8, zone2:1.5,}
 ```
 
-### 2. dataset 이름
+### 2. preprocessed_df_BallCount.csv
+```
+{lh_or_rh:1 ,height:183.0,bc:0,1:0.000,2:0.75,3:0.200,4:0.667,5:0.250,6:0.000,7:0.300, 8:0.356, 9:0.120, 10: 1.000 ,11: 0.15,12:0.154,13:0.333,14:0.150 ,15:0.333,16:0.120, 17:0.750, 18:0.333, 19:0.500, 20:0.100, 21:0.000, 22:0.111, 23:0.150, 24:0.000, 25:0.400
+}
+```
 
 ## 2. Environment Setup
 For venv users
