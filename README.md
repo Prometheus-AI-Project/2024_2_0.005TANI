@@ -46,15 +46,17 @@ project_base_path
 ## 2. Environment Setup
 For venv users
 ```
-python3.10 -m venv .MIXXX
+python3.11 -m venv .MIXXX
 source .MIXXX/bin/activate
-pip3 install fastapi uvicorn   <- 이렇게 하던지, 아니면 requirements.txt를 만들던지. 
+pip3 install numpy==1.26.4 pandas==2.2.2 tensorflow==2.18.0 keras==3.8.0 scikit-learn==1.6.1
+pip3 install fastapi uvicorn
 ```
 
 For conda users
 ```
-conda create -n MIXXX python==3.10
-conda create MIXXX
+conda create -n MIXXX python==3.11
+conda activate MIXXX
+pip3 install numpy==1.26.4 pandas==2.2.2 tensorflow==2.18.0 keras==3.8.0 scikit-learn==1.6.1
 pip3 install fastapi uvicorn 
 ```
 
