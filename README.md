@@ -65,6 +65,6 @@ Google drive:
 
 
 ## 6. Members
-김재영 Dataset preprocessing/augmentation, Model training, Model building<br>
-문재원 Dataset preprocessing, Model Training, Web Setting<br>
-이민석 Dataset preprocessing, Model Training, Web Setting<br>
+**김재영** Dataset preprocessing/augmentation, Model training, Model building<br>
+**문재원** Dataset preprocessing, Model Training, Web Setting<br>
+**이민석** Dataset preprocessing, Model Training, Web Setting<br>
