@@ -72,7 +72,7 @@ def pitcher_model(player_pick , pitcherHeight, pitchHand, pitchForm, pitchType, 
     }
 
     
-    pitcher_model_top3 = run_pitcher_model(input_dict_forpitcher, 'pitch_result')
+    pitcher_model_top5 = run_pitcher_model(input_dict_forpitcher, 'pitch_result')
     
     input_dict_forhitter = {
         "height": hitter_height,
@@ -90,13 +90,13 @@ def pitcher_model(player_pick , pitcherHeight, pitchHand, pitchForm, pitchType, 
     
     #call result func
     #ex, 
-    #pitcher_model_top3 = [17, 3, 23]
+    #pitcher_model_top5 = [17, 3, 23]
     
     
     
     #hit_percentage = [0.1, 0.05, 0.2, 0.05, 0.0, 0.05, 0.1, 0.15, 0.1, 0.05, 0.1, 0.15, 0.25, 0.15, 0.2, 0.2, 0.15, 0.25, 0.25, 0.1, 0.05, 0.1, 0.05, 0.1, 0.1]
     
-    results = pitch_model_result(pitcher_model_top3, hit_percentage, player_pick)
+    results = pitch_model_result(pitcher_model_top5, hit_percentage, player_pick)
     
     return results
 
@@ -206,9 +206,9 @@ def run_pitcher_model(input_dict, mode):
     avg_pred = preds.mean(axis=0)
     
      
-    if mode == "pitch_model":
-        top_3_indices = np.argsort(avg_pred)[-3:][::-1]
-        return top_3_indices
+    if mode == "pitch_result":
+        top_5_indices = np.argsort(avg_pred)[-5:][::-1]
+        return top_5_indices
     else:
         return avg_pred
 
@@ -261,7 +261,7 @@ def hitter_model(player_pick, hitter_height, lh_or_rh, pitcher_height, lp_or_rp,
     }
 
     
-    pitcher_model_top3 = run_pitcher_model(input_dict_forpitcher, 'pitch_result')
+    pitcher_model_top5 = run_pitcher_model(input_dict_forpitcher, 'pitch_result')
     
     
     input_dict_forhitter = {
@@ -275,7 +275,7 @@ def hitter_model(player_pick, hitter_height, lh_or_rh, pitcher_height, lp_or_rp,
     hit_percentage = run_hitter_model(input_dict_forhitter, 'batai_result')
     
     
-    results = bat_model_result(pitcher_model_top3, hit_percentage, player_pick)
+    results = bat_model_result(pitcher_model_top5, hit_percentage, player_pick)
     
     
     

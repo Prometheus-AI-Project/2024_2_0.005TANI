@@ -68,7 +68,7 @@ useEffect(() => {
         resetCount();
         setHitterOrder((prev) => prev + 1);
 
-        navigate('/homerun')
+        //navigate('/homerun')
         break;
 
       case 'hit':
@@ -83,7 +83,7 @@ useEffect(() => {
         setHitterOrder((prev) => prev + 1);
         resetCount();
 
-        navigate('/hit')
+        //navigate('/hit')
         break;
 
       case 'foul':
@@ -91,7 +91,7 @@ useEffect(() => {
           setStrikes((prev) => prev + 1);
         }
 
-        navigate('/foul')
+        //navigate('/foul')
         break;
 
       case 'strike':
@@ -105,21 +105,27 @@ useEffect(() => {
           return newStrike;
         });
 
-        navigate('/strike')
+        //navigate('/strike')
         break;
 
       case 'ball':
         setBalls((prev) => {
           const newBall = prev + 1;
           if (newBall >= 4) {
-            setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
+            if (runners === 3){
+              setAwayScore((prev) => prev + 1);
+              setRunners(0);
+            }
+            else{
+              setRunners((prevRunner) => Math.min(prevRunner + 1, 3));
+            }
             setHitterOrder((prev) => prev + 1);
             resetCount();
           }
           return newBall;
         });
 
-        navigate('/ball')
+        //navigate('/ball')
         break;
 
       case 'out':
@@ -130,7 +136,7 @@ useEffect(() => {
           return newOut;
         });
 
-        navigate('/out')
+        //navigate('/out')
         break;
 
       default:
@@ -207,13 +213,13 @@ useEffect(() => {
       pitchForm: pitchForm || "오버핸드", // 기본값 설정
       pitchType: selectedPitch || "직구",
       pitcherHeight: pitcherHeight || 185,
-      zone: selectedZone !== null ? selectedZone : 1, // 기본값 0
+      zone: selectedZone !== null ? selectedZone+1 : 1, 
       awayTeam: awayTeam || "NC",
       hitterOrder: hitterOrder || 1,
       outs: outs || 0,
       strikes: strikes || 0,
       balls: balls || 0,
-      runners: runners || 1, // 기본값 빈 배열
+      runners: runners || 0,
     };
 
     try {
@@ -287,36 +293,68 @@ useEffect(() => {
             </div>
           )}
 
-      {/* 스코어보드 */}
       <div className="pitching-scoreboard">
-        {/* 왼쪽 팀 점수 */}
-        <div className="score-team left">
-          {homeTeam}   {homeScore}
-        </div>
-
-        {/* 이닝, 볼카운트, 아웃 정보 */}
-        <div className="score-inning">
-          {inning}  {outs} 아웃 {strikes} 스트라이크 {balls} 볼
-        </div>
-
-        {/* 다이아몬드 (가운데) */}
-        <div className="baseball-diamond-container">
-          <div className="baseball-diamond">
-            <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
-            <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
-            <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
-                        
+        {/* 왼쪽: 점수와 이닝 정보를 담은 컨테이너 (흰색 배경) */}
+        <div className="left-side">
+          <div className="score-container">
+            <div className="team-wrapper">
+              <span className="team home">{homeTeam}</span>
+              <span className="teamInfo">(플레이어 팀)</span>
+            </div>
+            <span className="score home">{homeScore}</span>
+            <span className="score away">{awayScore}</span>
+            <div className="team-wrapper">
+              <span className="team away">{awayTeam}</span>
+              <span className="teamInfo">(AI 팀)</span>
+            </div>
+          </div>
+          <div className="inning-info">
+            {inning}
           </div>
         </div>
-  
-        {/* 오른쪽 팀 점수 */}
-        <div className="score-team right">
-          {awayScore}   {awayTeam} 
+        
+        {/* 오른쪽: 세로로 쌓인 볼/스트라이크/아웃 카운트 */}
+        <div className="count-container">
+          {/* Ball 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Ball</div>
+            <div className="circle-container">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className={`circle ${i < balls ? "ballfilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          {/* Strike 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Strike</div>
+            <div className="circle-container">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className={`circle ${i < strikes ? "strikefilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          {/* Out 카운트 */}
+          <div className="count-group">
+            <div className="count-label">Out</div>
+            <div className="circle-container">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className={`circle ${i < outs ? "outfilled" : ""}`}></div>
+              ))}
+            </div>
+          </div>
+          
         </div>
+        {/* 다이아몬드 (가운데) */}
+        <div className="baseball-diamond-container">
+              <div className="baseball-diamond">
+                <div className={`base base-1 ${runners >= 1 ? "occupied" : ""}`} />
+                <div className={`base base-2 ${runners >= 2 ? "occupied" : ""}`} />
+                <div className={`base base-3 ${runners >= 3 ? "occupied" : ""}`} />
+                            
+              </div>
+          </div>
       </div>
-  
-      
-  
+
       {/* 메인 콘텐츠 */}
       <div className="pitching-main">
  

@@ -28,8 +28,8 @@ def pitcher_inform(team_inform):
             return hand, height
         
 
-def pitch_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레이어가 투수일 때 작동 함수
-    # "pitcher_model_top3" : 투수 모델 inference 결과 최종 가장 확률 높은 세개 구역 (ex, [17, 3, 10] )(*1~25라고 가정정)
+def pitch_model_result(pitcher_model_top5, hit_percentage, player_pick):# 플레이어가 투수일 때 작동 함수
+    # "pitcher_model_top5" : 투수 모델 inference 결과 최종 가장 확률 높은 세개 구역 (ex, [17, 3, 10] )(*1~25라고 가정정)
     # "hit_percentage" : 타자 출루율 정보 (ex, [0.123, 0.32, .....] )
     # "player_pick" : 플레이어가 선택한 구역
     global strike_zones
@@ -41,7 +41,7 @@ def pitch_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레
     hit_strikes, hit_ball =  check_hitzone(player_pick)
     
     if player_pick in strike_zones:#플레이어 픽 == 스트라이크 존 
-        if player_pick in pitcher_model_top3:# homerun 처리
+        if player_pick in pitcher_model_top5:# homerun 처리
             result = check_probability(hit_percentage[player_pick-1]) #출루율 적용
             if result:
                 return "homerun" 
@@ -57,10 +57,10 @@ def pitch_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레
                     return "strike"
                 
         else:
-            hit_strike_zones = list(set(pitcher_model_top3) & set(hit_strikes))
-            hit_ball_zones = list(set(pitcher_model_top3) & set(hit_ball))
+            hit_strike_zones = list(set(pitcher_model_top5) & set(hit_strikes))
+            hit_ball_zones = list(set(pitcher_model_top5) & set(hit_ball))
             
-            if len(hit_strike_zones)>0:#안타 처리, pitcher_model_top3 == 십자가 strike zone 
+            if len(hit_strike_zones)>0:#안타 처리, pitcher_model_top5 == 십자가 strike zone 
                 hit_strike_zones[0]
                 result = check_probability(hit_percentage[hit_strike_zones[0]-1]) #출루율 적용
                 if result:
@@ -75,18 +75,18 @@ def pitch_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레
                             return "foul"
                     else:
                         return "strike"
-            elif len(hit_ball_zones)>0:#안타 처리, pitcher_model_top3 == 십자가 ball zone 
+            elif len(hit_ball_zones)>0:#안타 처리, pitcher_model_top5 == 십자가 ball zone 
                 return "ball"
             
             else:#stike
                 return "strike"
     else : #플레이어 픽 == ball 존
-        if player_pick in pitcher_model_top3:# ball 처리
+        if player_pick in pitcher_model_top5:# ball 처리
             return "ball"
         else:
-            hit_strike_zones = list(set(pitcher_model_top3) & set(hit_strikes))
-            hit_ball_zones = list(set(pitcher_model_top3) & set(hit_ball))
-            if len(hit_strike_zones)>0:# ball 처리, pitcher_model_top3 == 십자가 strike zone 
+            hit_strike_zones = list(set(pitcher_model_top5) & set(hit_strikes))
+            hit_ball_zones = list(set(pitcher_model_top5) & set(hit_ball))
+            if len(hit_strike_zones)>0:# ball 처리, pitcher_model_top5 == 십자가 strike zone 
                 result = check_probability(hit_percentage[hit_strike_zones[0]-1]) #출루율 적용
                 if result:
                     return "hit" 
@@ -111,7 +111,7 @@ def check_probability(probability):
     return: True(성공), False(실패)
     """
     random_value = random.random()  # 0.0 ~ 1.0 사이 난수 생성
-    return random_value < probability
+    return random_value < probability #타율 조정
 
 def check_hitzone(zone):#십자가 위치 -> 스트라이크, 볼 위치 판단
     
@@ -145,21 +145,21 @@ def check_hitzone(zone):#십자가 위치 -> 스트라이크, 볼 위치 판단
 
 
 
-def bat_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레이어가 타자일 때 작동 함수
+def bat_model_result(pitcher_model_top5, hit_percentage, player_pick):# 플레이어가 타자일 때 작동 함수
     
     global strike_zones
     
-    hit_strikes, hit_ball =  check_hitzone(pitcher_model_top3[0])#모델 예측 top1 부터 내림차순이라는 가정
+    hit_strikes, hit_ball =  check_hitzone(pitcher_model_top5[0])#모델 예측 top1 부터 내림차순이라는 가정
     
     if player_pick in strike_zones:#타자 휘두른 경우
-        if player_pick in pitcher_model_top3:#정확히 일치하는 경우 -> homerun
+        if player_pick in pitcher_model_top5:#정확히 일치하는 경우 -> homerun
             result = check_probability(hit_percentage[player_pick-1]) #출루율 적용
             if result:
                 return "homerun" 
             else:
                 return "foul"
         elif player_pick in hit_strikes:#top 1 십자가, strike -> 안타타
-            result = check_probability(hit_percentage[pitcher_model_top3[0]-1]) #출루율 적용
+            result = check_probability(hit_percentage[pitcher_model_top5[0]-1]) #출루율 적용
             if result:
                 return "hit" 
             else:
@@ -167,7 +167,7 @@ def bat_model_result(pitcher_model_top3, hit_percentage, player_pick):# 플레�
         else:
             return "strike"
     else:#타자 안 휘두른 경우
-        if pitcher_model_top3[0] in strike_zones:
+        if pitcher_model_top5[0] in strike_zones:
             return "strike"
         else:
             return "ball"
