@@ -13,17 +13,7 @@ Below are the examples of dataset
 pitch data:{"isbn": "0151686564", "text_reviews_count": "626", "series": [] }
 ```
 
-
-## 1. Make Dataset
-1. Crawling the dataset
-
-
-
-2. After generating captions using GPT, structure the dataset
-
-
-
-
+### 2. dataset 이름름
 
 ## 2. Environment Setup
 For venv users
@@ -43,22 +33,11 @@ pip3 install fastapi uvicorn
 ```
 
 
-## 3. Training
-```
-python src/blip_fine_tune_2.py
-```
+## 3. Training & Inference 
 
-
-
-
-## 4. Inference 
-```sh
-python src/blip_validate.py \
-   --dataset {'CIRR' or 'FashionIQ'} \
-   --blip-model-name {trained model name} \
-   --model-path {for path} 
-```
-
+For training and inference, simply run each of the specified files listed below.
+- Training: (파일명)
+- Inference: (파일명)
 
 
 ## 5. Web page 
@@ -82,11 +61,7 @@ Google drive:
 
 
 
-## 7. Acknowledgement
-Our implementation and development is based on [https://github.com/chunmeifeng/SPRC]
-
-
-## 8. Members
+## 7. Members
 김재영 Dataset preprocessing/augmentation, Model training, Model building<br>
 문재원 Dataset preprocessing, Model Training, Web Setting<br>
 이민석 Dataset preprocessing, Model Training, Web Setting<br>
