@@ -382,6 +382,7 @@ def run_hitter_model(input_dict, mode):
             input_dict=input_dict,
             input_cols=input_cols_1
         )
+        
         preds.append(y_pred_1)
 
         y_pred_2 = predict_zones_single_sample(
@@ -390,6 +391,7 @@ def run_hitter_model(input_dict, mode):
             input_dict=input_dict,
             input_cols=input_cols_2
         )
+        
         preds.append(y_pred_2)
 
         y_pred_3 = predict_zones_single_sample(
@@ -398,6 +400,7 @@ def run_hitter_model(input_dict, mode):
             input_dict=input_dict,
             input_cols=input_cols_3
         )
+        
         preds.append(y_pred_3)
 
         y_pred_4 = predict_zones_single_sample(
@@ -406,6 +409,7 @@ def run_hitter_model(input_dict, mode):
             input_dict=input_dict,
             input_cols=input_cols_4
         )
+        
         preds.append(y_pred_4)
 
         preds = np.array(preds) 

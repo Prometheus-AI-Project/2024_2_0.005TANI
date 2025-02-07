@@ -77,7 +77,7 @@ async def process_pitch(data: PitchData):
     print(f"Received pitch data: {data}")
     try:
         # 예시: 요청 데이터 검증 및 처리
-        if data.zone < 0 or data.zone > 24:
+        if data.zone < 1 or data.zone > 25:
             raise HTTPException(status_code=400, detail="Invalid zone value. Must be between 0 and 24.")
         lh_or_rh, hitter_height = hitter_inform(data.awayTeam, data.hitterOrder)#현재 상대 팀 타자 정보(좌/우타, 키) 가져옴
         
@@ -125,7 +125,7 @@ async def process_bat(data: BatData):
     print(f"Received bat data: {data}")
     try:
         # 예시: 요청 데이터 검증 및 처리
-        if data.zone < 0 or data.zone > 24:
+        if data.zone < 1 or data.zone > 25:
             raise HTTPException(status_code=400, detail="Invalid zone value. Must be between 0 and 24.")
         
         lh_or_rh, hitter_height = hitter_inform(data.homeTeam, data.hitterOrder)#현재 본인 팀 타자 정보(좌/우타, 키) 가져옴
