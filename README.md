@@ -84,13 +84,14 @@ python src/blip_validate.py \
 *Start Both Terminal!
 
 #Terminal 1
+
 (cd demo/web-demo)
 npm start
 
   
 #Terminal 2
-(cd demo/backend)
 
+(cd demo/backend)
 uvicorn main:app --reload ( or python main.py )
 ```
 
